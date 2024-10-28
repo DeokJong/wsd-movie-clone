@@ -92,25 +92,31 @@ const Header: React.FC = () => {
           </MobileMenuButton>
         </HeaderRight>
       </AppHeader>
-
-      {/* 모바일 내비게이션 */}
       <MobileNav className={isMobileMenuOpen ? 'open' : ''}>
         <CloseButton onClick={toggleMobileMenu}>
           <CloseIcon />
         </CloseButton>
         <MobileList>
-          <ListItem component={Link} to="/" onClick={toggleMobileMenu}>
-            <ListItemText primary="홈" />
-          </ListItem>
-          <ListItem component={Link} to="/popular" onClick={toggleMobileMenu}>
-            <ListItemText primary="대세 콘텐츠" />
-          </ListItem>
-          <ListItem component={Link} to="/wishlist" onClick={toggleMobileMenu}>
-            <ListItemText primary="내가 찜한 리스트" />
-          </ListItem>
-          <ListItem component={Link} to="/search" onClick={toggleMobileMenu}>
-            <ListItemText primary="찾아보기" />
-          </ListItem>
+          <StyledListItem disablePadding>
+            <ListItem component={Link} to="/" onClick={toggleMobileMenu}>
+              <ListItemText primary="홈" />
+            </ListItem>
+          </StyledListItem>
+          <StyledListItem disablePadding>
+            <ListItem component={Link} to="/popular" onClick={toggleMobileMenu}>
+              <ListItemText primary="대세 콘텐츠" />
+            </ListItem>
+          </StyledListItem>
+          <StyledListItem disablePadding>
+            <ListItem component={Link} to="/wishlist" onClick={toggleMobileMenu}>
+              <ListItemText primary="내가 찜한 리스트" />
+            </ListItem>
+          </StyledListItem>
+          <StyledListItem disablePadding>
+            <ListItem component={Link} to="/search" onClick={toggleMobileMenu}>
+              <ListItemText primary="찾아보기" />
+            </ListItem>
+          </StyledListItem>
         </MobileList>
       </MobileNav>
     </Box>
