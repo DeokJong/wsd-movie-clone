@@ -1,44 +1,44 @@
 interface Movie {
-    id: number;
-    title: string;
-    poster_path: string;
+  id: number
+  title: string
+  poster_path: string
 }
 
 class WishlistManager {
-    private wishlist: Movie[];
+  private wishlist: Movie[]
 
-    constructor() {
-        this.wishlist = [];
-    }
+  constructor() {
+    this.wishlist = []
+  }
 
-    loadWishlist(): void {
-        const storedWishlist = localStorage.getItem('movieWishlist');
-        if (storedWishlist) {
-            this.wishlist = JSON.parse(storedWishlist);
-        }
+  loadWishlist(): void {
+    const storedWishlist = localStorage.getItem('movieWishlist')
+    if (storedWishlist) {
+      this.wishlist = JSON.parse(storedWishlist)
     }
+  }
 
-    private saveWishlist(): void {
-        localStorage.setItem('movieWishlist', JSON.stringify(this.wishlist));
-    }
+  private saveWishlist(): void {
+    localStorage.setItem('movieWishlist', JSON.stringify(this.wishlist))
+  }
 
-    toggleWishlist(movie: Movie): void {
-        const index = this.wishlist.findIndex(item => item.id === movie.id);
-        if (index === -1) {
-            this.wishlist.push(movie);
-        } else {
-            this.wishlist.splice(index, 1);
-        }
-        this.saveWishlist();
+  toggleWishlist(movie: Movie): void {
+    const index = this.wishlist.findIndex((item) => item.id === movie.id)
+    if (index === -1) {
+      this.wishlist.push(movie)
+    } else {
+      this.wishlist.splice(index, 1)
     }
+    this.saveWishlist()
+  }
 
-    isInWishlist(movieId: number): boolean {
-        return this.wishlist.some(item => item.id === movieId);
-    }
+  isInWishlist(movieId: number): boolean {
+    return this.wishlist.some((item) => item.id === movieId)
+  }
 
-    getWishlist(): Movie[] {
-        return this.wishlist;
-    }
+  getWishlist(): Movie[] {
+    return this.wishlist
+  }
 }
 
-export default WishlistManager;
+export default WishlistManager
