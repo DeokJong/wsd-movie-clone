@@ -179,3 +179,76 @@ function Layout() {
 paddingX: xs, sm, md, lg를 사용하여 화면 크기에 따라 좌우 여백을 다르게 적용합니다.
 paddingY: 마찬가지로, 화면 크기에 따라 상하 여백을 조절합니다.
 이렇게 하면 작은 화면에서는 여백이 줄어들고 큰 화면에서는 여백이 더 넓어져, 다양한 화면 크기에 최적화된 반응형 레이아웃을 제공합니다.
+
+## Jotai Hook
+
+### 질문
+
+```md
+import { useEffect, useState } from 'react'
+import { useAtom, atom } from 'jotai'
+import { Theme } from '@mui/material'
+
+import { whiteTheme, darkTheme } from '../theme'
+
+export const useDarkmode = () => {
+  const darkmodeAtom = atom<boolean>(localStorage.getItem('theme') === 'dark')
+  const [isDarkmode, setIsDarkmode] = useAtom(darkmodeAtom)
+  const [theme, setTheme] = useState<Theme>(isDarkmode ? darkTheme : whiteTheme)
+
+  const toggleDarkmode = () => setIsDarkmode((prev) => !prev)
+
+  useEffect(() => {
+    localStorage.setItem('theme', isDarkmode ? 'dark' : 'light')
+    setTheme(isDarkmode ? darkTheme : whiteTheme)
+  }, [isDarkmode])
+
+  return {
+    isDarkmode,
+    theme,
+    toggleDarkmode
+  }
+}
+
+---
+
+이 코드 최적화 해줘
+```
+
+### 응답
+
+```md
+import { useEffect, useState } from 'react'
+import { useAtom, atom } from 'jotai'
+import { Theme } from '@mui/material'
+
+import { whiteTheme, darkTheme } from '../theme'
+
+// Atom 정의를 useDarkmode 밖으로 이동하여 매번 새로운 atom이 생성되는 것을 방지
+const darkmodeAtom = atom<boolean>(localStorage.getItem('theme') === 'dark')
+
+export const useDarkmode = () => {
+  const [isDarkmode, setIsDarkmode] = useAtom(darkmodeAtom)
+  const [theme, setTheme] = useState<Theme>(isDarkmode ? darkTheme : whiteTheme)
+
+  const toggleDarkmode = () => {
+    setIsDarkmode((prev) => {
+      const newValue = !prev
+      localStorage.setItem('theme', newValue ? 'dark' : 'light')
+      return newValue
+    })
+  }
+
+  useEffect(() => {
+    setTheme(isDarkmode ? darkTheme : whiteTheme)
+  }, [isDarkmode])
+
+  return {
+    isDarkmode,
+    theme,
+    toggleDarkmode
+  }
+}
+```
+
+이렇게 최적화한 코드로 성능이 향상될 수 있으며, atom을 매번 새로 생성하지 않으므로 더 일관된 상태 관리가 가능합니다. 추가로 개선할 부분이 있으면 말씀해 주세요!
