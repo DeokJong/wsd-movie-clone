@@ -1,5 +1,5 @@
 // Header.styles.ts
-import { List, ListItem, IconButton, styled } from '@mui/material'
+import { List, ListItem, IconButton, styled, SvgIcon } from '@mui/material'
 import { Theme } from '@mui/material/styles'
 
 const commonTypographyStyles = {
@@ -65,6 +65,14 @@ export const Logo = styled('div')({
   alignItems: 'center',
 })
 
+export const ThemeMode = styled(SvgIcon)(() => ({
+  color: '#e5e5e5',
+  cursor: 'pointer',
+  '&:hover': {
+    color: '#b3b3b3',
+  },
+}))
+
 export const DesktopNavLinks = styled('nav')(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     display: 'none',
@@ -93,6 +101,12 @@ export const DesktopListItem = styled(ListItem)(() => ({
 
 export const IconButtonStyled = styled(IconButton)(commonIconButtonStyles)
 
+export const DesktopMenuButton = styled(IconButtonStyled)(({ theme }) => ({
+  [theme.breakpoints.down('md')]: {
+    display: 'none',
+  },
+}))
+
 export const MobileMenuButton = styled(IconButtonStyled)(({ theme }) => ({
   display: 'none',
   [theme.breakpoints.down('md')]: {
@@ -102,6 +116,8 @@ export const MobileMenuButton = styled(IconButtonStyled)(({ theme }) => ({
 
 export const MobileNav = styled('div')(({ theme }) => ({
   display: 'none',
+  justifyContent: 'space-between',
+  flexDirection: 'column',
   position: 'fixed',
   top: 0,
   right: '-100%',
@@ -114,6 +130,21 @@ export const MobileNav = styled('div')(({ theme }) => ({
     right: 0,
   },
   [theme.breakpoints.down('md')]: {
+    display: 'flex',
+  },
+}))
+
+export const MobileNavTop = styled('div')(({ theme }) => ({
+  display: 'none',
+  [theme.breakpoints.down('md')]: {
+    display: 'block',
+  },
+}))
+
+export const MobileNavBotton = styled('div')(({ theme }) => ({
+  display: 'none',
+  [theme.breakpoints.down('md')]: {
+    padding: '8px',
     display: 'block',
   },
 }))
