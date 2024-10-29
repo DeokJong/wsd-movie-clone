@@ -1,6 +1,6 @@
 // Header.tsx
 import React, { useState, useEffect } from 'react'
-import { Box, IconButton, ListItem, ListItemText } from '@mui/material'
+import { Box, IconButton, ListItem, Typography } from '@mui/material'
 import { Link, useNavigate } from '@tanstack/react-router'
 import {
   ConfirmationNumber as TicketIcon,
@@ -20,8 +20,9 @@ import {
   MobileNav,
   CloseButton,
   StyledList,
-  StyledListItem,
+  DesktopListItem,
   MobileList,
+  MobileListItem,
 } from './Header.styles'
 
 const Header: React.FC = () => {
@@ -55,68 +56,69 @@ const Header: React.FC = () => {
         <HeaderLeft>
           <Logo>
             <IconButton component={Link} to="/">
-              <TicketIcon style={{ color: '#E50914' }} />
+              <TicketIcon fontSize="large" style={{ color: '#E50914' }} />
             </IconButton>
           </Logo>
           <DesktopNavLinks>
             <StyledList>
-              <StyledListItem disablePadding>
+              <DesktopListItem disablePadding>
                 <ListItem component={Link} to="/">
-                  <ListItemText primary="홈" />
+                  <Typography variant="h6">홈</Typography>
                 </ListItem>
-              </StyledListItem>
-              <StyledListItem disablePadding>
+              </DesktopListItem>
+              <DesktopListItem disablePadding>
                 <ListItem component={Link} to="/popular">
-                  <ListItemText primary="대세 콘텐츠" />
+                  <Typography variant="h6">대세 콘텐츠</Typography>
                 </ListItem>
-              </StyledListItem>
-              <StyledListItem disablePadding>
+              </DesktopListItem>
+              <DesktopListItem disablePadding>
                 <ListItem component={Link} to="/wishlist">
-                  <ListItemText primary="내가 찜한 리스트" />
+                  <Typography variant="h6">내가 찜한 리스트</Typography>
                 </ListItem>
-              </StyledListItem>
-              <StyledListItem disablePadding>
+              </DesktopListItem>
+              <DesktopListItem disablePadding>
                 <ListItem component={Link} to="/search">
-                  <ListItemText primary="찾아보기" />
+                  <Typography variant="h6">찾아보기</Typography>
                 </ListItem>
-              </StyledListItem>
+              </DesktopListItem>
             </StyledList>
           </DesktopNavLinks>
         </HeaderLeft>
         <HeaderRight>
           <IconButtonStyled onClick={removeKey}>
-            <PersonIcon style={{ color: '#FFFFFF' }} />
+            <PersonIcon fontSize="large" style={{ color: '#FFFFFF' }} />
           </IconButtonStyled>
           <MobileMenuButton onClick={toggleMobileMenu}>
-            <MenuIcon />
+            <MenuIcon fontSize="large" />
           </MobileMenuButton>
         </HeaderRight>
       </AppHeader>
+
       <MobileNav className={isMobileMenuOpen ? 'open' : ''}>
         <CloseButton onClick={toggleMobileMenu}>
-          <CloseIcon />
+          <CloseIcon fontSize="large" />
         </CloseButton>
         <MobileList>
-          <StyledListItem disablePadding>
+          <MobileListItem disablePadding>
             <ListItem component={Link} to="/" onClick={toggleMobileMenu}>
-              <ListItemText primary="홈" />
+              <Typography variant="h6">홈</Typography>
             </ListItem>
-          </StyledListItem>
-          <StyledListItem disablePadding>
+          </MobileListItem>
+          <MobileListItem disablePadding>
             <ListItem component={Link} to="/popular" onClick={toggleMobileMenu}>
-              <ListItemText primary="대세 콘텐츠" />
+              <Typography variant="h6">대세 콘텐츠</Typography>
             </ListItem>
-          </StyledListItem>
-          <StyledListItem disablePadding>
+          </MobileListItem>
+          <MobileListItem disablePadding>
             <ListItem component={Link} to="/wishlist" onClick={toggleMobileMenu}>
-              <ListItemText primary="내가 찜한 리스트" />
+              <Typography variant="h6">내가 찜한 리스트</Typography>
             </ListItem>
-          </StyledListItem>
-          <StyledListItem disablePadding>
+          </MobileListItem>
+          <MobileListItem disablePadding>
             <ListItem component={Link} to="/search" onClick={toggleMobileMenu}>
-              <ListItemText primary="찾아보기" />
+              <Typography variant="h6">찾아보기</Typography>
             </ListItem>
-          </StyledListItem>
+          </MobileListItem>
         </MobileList>
       </MobileNav>
     </Box>
