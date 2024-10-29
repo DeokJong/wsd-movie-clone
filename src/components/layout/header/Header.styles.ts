@@ -144,7 +144,7 @@ export const MobileNavTop = styled('div')(({ theme }) => ({
 export const MobileNavBotton = styled('div')(({ theme }) => ({
   display: 'none',
   [theme.breakpoints.down('md')]: {
-    padding: '8px',
+    padding: '5px',
     display: 'block',
   },
 }))

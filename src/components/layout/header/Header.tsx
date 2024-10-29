@@ -2,11 +2,10 @@
 import React, { useState, useEffect } from 'react'
 import { Box, IconButton, ListItem, Typography } from '@mui/material'
 import { Link, useNavigate } from '@tanstack/react-router'
+import { DarkModeSwitch } from 'react-toggle-dark-mode'
 import {
   ConfirmationNumber as TicketIcon,
   Person as PersonIcon,
-  Bedtime as BedtimeIcon,
-  Brightness7 as BrightnessIcon,
   Menu as MenuIcon,
   Close as CloseIcon,
 } from '@mui/icons-material'
@@ -35,7 +34,7 @@ import {
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
-  const { toggleDarkmode } = useTheme()
+  const { toggleDarkmode, isDarkmode } = useTheme()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -93,10 +92,8 @@ const Header: React.FC = () => {
           </DesktopNavLinks>
         </HeaderLeft>
         <HeaderRight>
-          <DesktopMenuButton onClick={toggleDarkmode}>
-            {localStorage.getItem('theme') === 'dark'
-              ? <BedtimeIcon />
-              : <BrightnessIcon />}
+          <DesktopMenuButton>
+            <DarkModeSwitch sunColor='white' onChange={toggleDarkmode} checked={isDarkmode} />
           </DesktopMenuButton>
           <IconButtonStyled onClick={removeKey}>
             <PersonIcon fontSize="large" style={{ color: '#FFFFFF' }} />
@@ -136,10 +133,8 @@ const Header: React.FC = () => {
           </MobileList>
         </MobileNavTop>
         <MobileNavBotton>
-          <MobileMenuButton onClick={toggleDarkmode}>
-            {localStorage.getItem('theme') === 'dark'
-              ? <BedtimeIcon />
-              : <BrightnessIcon />}
+          <MobileMenuButton>
+            <DarkModeSwitch sunColor='white' onChange={toggleDarkmode} checked={isDarkmode} />
           </MobileMenuButton>
         </MobileNavBotton>
       </MobileNav>
