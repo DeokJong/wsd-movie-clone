@@ -1,10 +1,33 @@
-// styles.ts
-import { styled } from '@mui/material/styles'
-import IconButton from '@mui/material/IconButton'
-import { List, ListItem } from '@mui/material'
+// Header.styles.ts
+import { List, ListItem, IconButton, styled } from '@mui/material'
+import { Theme } from '@mui/material/styles'
 
-export const AppHeader = styled('header')(() => ({
-  height: '60px',
+const commonTypographyStyles = {
+  color: '#e5e5e5',
+  textDecoration: 'none',
+  whiteSpace: 'nowrap',
+  transition: 'color 0.3s ease',
+  '&:hover': {
+    color: '#b3b3b3',
+  },
+}
+
+const commonIconButtonStyles = ({ theme }: { theme: Theme }) => ({
+  background: 'none',
+  border: 'none',
+  color: 'white',
+  cursor: 'pointer',
+  '&:hover': {
+    opacity: 0.5,
+  },
+  [theme.breakpoints.down('md')]: {
+    fontSize: '0.75rem',
+    marginLeft: '10px',
+  },
+})
+
+export const AppHeader = styled('header')(({ theme }) => ({
+  height: '80px',
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -18,6 +41,9 @@ export const AppHeader = styled('header')(() => ({
   transition: 'background-color 0.3s ease',
   '&:hover, &.scrolled': {
     backgroundColor: '#141414',
+  },
+  [theme.breakpoints.down('md')]: {
+    height: '56px',
   },
 }))
 
@@ -45,48 +71,27 @@ export const DesktopNavLinks = styled('nav')(({ theme }) => ({
   },
 }))
 
-export const StyledList = styled(List)(() => ({
+export const StyledList = styled(List)({
   display: 'flex',
   flexDirection: 'row',
   padding: 0,
   margin: 0,
-}))
+})
 
-export const StyledListItem = styled(ListItem)(() => ({
+export const DesktopListItem = styled(ListItem)(() => ({
   width: 'auto',
   padding: 0,
   marginRight: '20px',
   '& .MuiListItemText-root': {
     margin: 0,
   },
-  '& .MuiListItem-button': {
-    padding: 0,
-  },
   '& .MuiTypography-root': {
-    color: '#e5e5e5',
-    fontSize: '0.85rem',
-    transition: 'color 0.3s ease',
-    '&:hover': {
-      color: '#b3b3b3',
-    },
+    ...commonTypographyStyles,
+    fontSize: '1.2rem',
   },
 }))
 
-export const IconButtonStyled = styled(IconButton)(({ theme }) => ({
-  background: 'none',
-  border: 'none',
-  color: 'white',
-  fontSize: '1.2rem',
-  marginLeft: '20px',
-  cursor: 'pointer',
-  '&:hover': {
-    opacity: 0.5,
-  },
-  [theme.breakpoints.down('md')]: {
-    fontSize: '0.75rem',
-    marginLeft: '10px',
-  },
-}))
+export const IconButtonStyled = styled(IconButton)(commonIconButtonStyles)
 
 export const MobileMenuButton = styled(IconButtonStyled)(({ theme }) => ({
   display: 'none',
@@ -119,17 +124,13 @@ export const MobileList = styled(List)(() => ({
 }))
 
 export const MobileListItem = styled(ListItem)(() => ({
-  padding: '10px 20px',
+  padding: '5px',
   '& .MuiListItemText-root': {
     margin: 0,
   },
   '& .MuiTypography-root': {
-    color: '#e5e5e5',
-    fontSize: '1.2rem',
-    textDecoration: 'none',
-    '&:hover': {
-      color: '#b3b3b3',
-    },
+    ...commonTypographyStyles,
+    fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
   },
 }))
 

@@ -1,29 +1,32 @@
-import { createTheme as createMuiTheme } from '@mui/material/styles'
+import { createTheme } from '@mui/material/styles'
+import { deepmerge } from '@mui/utils'
+
+import { SBAggro } from './font'
+
+const addGlobalStyle = (styleString: string) => {
+  const style = document.createElement('style')
+  style.appendChild(document.createTextNode(styleString))
+  document.head.appendChild(style)
+}
+
+addGlobalStyle(SBAggro)
 
 declare module '@mui/material/styles/createPalette' {
   interface PaletteOptions {
     gradients?: {
-      desktop?: string
-      mobile?: string
-      tablet?: string
-      nav?: string
-      lightblueComponent?: string
-      // You can add more gradient definitions here if needed
+      background?: string
+      otherbackground?: string
     }
   }
   interface Palette {
     gradients: {
-      desktop: string
-      mobile: string
-      tablet: string
-      nav: string
-      lightblueComponent: string
-      // Match the PaletteOptions gradients structure
+      background: string
+      otherbackground: string
     }
   }
 }
 
-const theme = createMuiTheme({
+const baseTheme = createTheme({
   palette: {
     common: {
       black: '#000',
@@ -35,16 +38,9 @@ const theme = createMuiTheme({
       dark: '#303f9f',
       contrastText: '#fff',
     },
-    gradients: {
-      desktop: 'linear-gradient(135deg, #f5f7fa, #d4e0eb, #c3cfe2)',
-      mobile: 'linear-gradient(135deg, #f5f7fa, #d4e0eb, #c3cfe2)',
-      tablet: 'linear-gradient(135deg, #f5f7fa, #d4e0eb, #c3cfe2)',
-      nav: 'linear-gradient(180deg, rgba(17, 24, 39, 1), rgba(31, 41, 55, 1))',
-      lightblueComponent: 'linear-gradient(135deg, #f5f7fa, #d4e0eb, #c3cfe2)',
-    },
   },
   typography: {
-    fontFamily: '"Noto Sans KR","SBAggro","Consolas","Arial", sans-serif',
+    fontFamily: '"SBAggro","Consolas","Arial", sans-serif',
     fontSize: 14,
     fontWeightLight: 300,
     fontWeightRegular: 400,
@@ -116,4 +112,20 @@ const theme = createMuiTheme({
   },
 })
 
-export default theme
+const whiteTheme = deepmerge(baseTheme, {
+  palette: {
+    gradients: {
+      background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    },
+  },
+})
+
+const darkTheme = deepmerge(baseTheme, {
+  palette: {
+    gradients: {
+      background: 'linear-gradient(45deg, #019474 30%, #0071AC 90%)',
+    },
+  },
+})
+
+export default localStorage.getItem('theme') === 'dark' ? darkTheme : whiteTheme
