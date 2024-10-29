@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { Box, IconButton, ListItem, Typography } from '@mui/material'
 import { Link, useNavigate } from '@tanstack/react-router'
+import { DarkModeSwitch } from 'react-toggle-dark-mode'
 import {
   ConfirmationNumber as TicketIcon,
   Person as PersonIcon,
@@ -9,25 +10,31 @@ import {
   Close as CloseIcon,
 } from '@mui/icons-material'
 
+import { useTheme } from '../../../hooks/useTheme'
+
 import {
   AppHeader,
+  CloseButton,
+  DesktopListItem,
+  DesktopMenuButton,
+  DesktopNavLinks,
   HeaderLeft,
   HeaderRight,
-  Logo,
-  DesktopNavLinks,
   IconButtonStyled,
-  MobileMenuButton,
-  MobileNav,
-  CloseButton,
-  StyledList,
-  DesktopListItem,
+  Logo,
   MobileList,
   MobileListItem,
+  MobileMenuButton,
+  MobileNav,
+  MobileNavBotton,
+  MobileNavTop,
+  StyledList,
 } from './Header.styles'
 
 const Header: React.FC = () => {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState<boolean>(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
+  const { toggleDarkmode, isDarkmode } = useTheme()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -85,6 +92,9 @@ const Header: React.FC = () => {
           </DesktopNavLinks>
         </HeaderLeft>
         <HeaderRight>
+          <DesktopMenuButton>
+            <DarkModeSwitch sunColor='white' onChange={toggleDarkmode} checked={isDarkmode} />
+          </DesktopMenuButton>
           <IconButtonStyled onClick={removeKey}>
             <PersonIcon fontSize="large" style={{ color: '#FFFFFF' }} />
           </IconButtonStyled>
@@ -95,31 +105,38 @@ const Header: React.FC = () => {
       </AppHeader>
 
       <MobileNav className={isMobileMenuOpen ? 'open' : ''}>
-        <CloseButton onClick={toggleMobileMenu}>
-          <CloseIcon fontSize="large" />
-        </CloseButton>
-        <MobileList>
-          <MobileListItem disablePadding>
-            <ListItem component={Link} to="/" onClick={toggleMobileMenu}>
-              <Typography variant="h6">홈</Typography>
-            </ListItem>
-          </MobileListItem>
-          <MobileListItem disablePadding>
-            <ListItem component={Link} to="/popular" onClick={toggleMobileMenu}>
-              <Typography variant="h6">대세 콘텐츠</Typography>
-            </ListItem>
-          </MobileListItem>
-          <MobileListItem disablePadding>
-            <ListItem component={Link} to="/wishlist" onClick={toggleMobileMenu}>
-              <Typography variant="h6">내가 찜한 리스트</Typography>
-            </ListItem>
-          </MobileListItem>
-          <MobileListItem disablePadding>
-            <ListItem component={Link} to="/search" onClick={toggleMobileMenu}>
-              <Typography variant="h6">찾아보기</Typography>
-            </ListItem>
-          </MobileListItem>
-        </MobileList>
+        <MobileNavTop>
+          <CloseButton onClick={toggleMobileMenu}>
+            <CloseIcon fontSize="large" />
+          </CloseButton>
+          <MobileList>
+            <MobileListItem disablePadding>
+              <ListItem component={Link} to="/" onClick={toggleMobileMenu}>
+                <Typography variant="h6">홈</Typography>
+              </ListItem>
+            </MobileListItem>
+            <MobileListItem disablePadding>
+              <ListItem component={Link} to="/popular" onClick={toggleMobileMenu}>
+                <Typography variant="h6">대세 콘텐츠</Typography>
+              </ListItem>
+            </MobileListItem>
+            <MobileListItem disablePadding>
+              <ListItem component={Link} to="/wishlist" onClick={toggleMobileMenu}>
+                <Typography variant="h6">내가 찜한 리스트</Typography>
+              </ListItem>
+            </MobileListItem>
+            <MobileListItem disablePadding>
+              <ListItem component={Link} to="/search" onClick={toggleMobileMenu}>
+                <Typography variant="h6">찾아보기</Typography>
+              </ListItem>
+            </MobileListItem>
+          </MobileList>
+        </MobileNavTop>
+        <MobileNavBotton>
+          <MobileMenuButton>
+            <DarkModeSwitch sunColor='white' onChange={toggleDarkmode} checked={isDarkmode} />
+          </MobileMenuButton>
+        </MobileNavBotton>
       </MobileNav>
     </Box>
   )

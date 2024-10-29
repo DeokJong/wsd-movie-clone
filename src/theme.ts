@@ -128,4 +128,4 @@ const darkTheme = deepmerge(baseTheme, {
   },
 })
 
-export default localStorage.getItem('theme') === 'dark' ? darkTheme : whiteTheme
+export { whiteTheme, darkTheme }
