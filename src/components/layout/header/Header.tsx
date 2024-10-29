@@ -5,6 +5,8 @@ import { Link, useNavigate } from '@tanstack/react-router'
 import {
   ConfirmationNumber as TicketIcon,
   Person as PersonIcon,
+  Bedtime as BedtimeIcon,
+  Brightness7 as BrightnessIcon,
   Menu as MenuIcon,
   Close as CloseIcon,
 } from '@mui/icons-material'
@@ -23,11 +25,15 @@ import {
   DesktopListItem,
   MobileList,
   MobileListItem,
+  DesktopMenuButton,
+  MobileNavTop,
+  MobileNavBotton,
 } from './Header.styles'
 
 const Header: React.FC = () => {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState<boolean>(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => localStorage.getItem('theme') === 'dark')
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -48,6 +54,17 @@ const Header: React.FC = () => {
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
+  }
+
+  const toggleDarkMode = () => {
+    if (isDarkMode) {
+      localStorage.setItem('theme', 'light')
+    } else {
+      localStorage.setItem('theme', 'dark')
+    }
+
+    setIsDarkMode(prev => !prev)
+    window.location.reload()
   }
 
   return (
@@ -85,6 +102,11 @@ const Header: React.FC = () => {
           </DesktopNavLinks>
         </HeaderLeft>
         <HeaderRight>
+          <DesktopMenuButton onClick={toggleDarkMode}>
+            {localStorage.getItem('theme') === 'dark'
+              ? <BedtimeIcon />
+              : <BrightnessIcon />}
+          </DesktopMenuButton>
           <IconButtonStyled onClick={removeKey}>
             <PersonIcon fontSize="large" style={{ color: '#FFFFFF' }} />
           </IconButtonStyled>
@@ -95,31 +117,40 @@ const Header: React.FC = () => {
       </AppHeader>
 
       <MobileNav className={isMobileMenuOpen ? 'open' : ''}>
-        <CloseButton onClick={toggleMobileMenu}>
-          <CloseIcon fontSize="large" />
-        </CloseButton>
-        <MobileList>
-          <MobileListItem disablePadding>
-            <ListItem component={Link} to="/" onClick={toggleMobileMenu}>
-              <Typography variant="h6">홈</Typography>
-            </ListItem>
-          </MobileListItem>
-          <MobileListItem disablePadding>
-            <ListItem component={Link} to="/popular" onClick={toggleMobileMenu}>
-              <Typography variant="h6">대세 콘텐츠</Typography>
-            </ListItem>
-          </MobileListItem>
-          <MobileListItem disablePadding>
-            <ListItem component={Link} to="/wishlist" onClick={toggleMobileMenu}>
-              <Typography variant="h6">내가 찜한 리스트</Typography>
-            </ListItem>
-          </MobileListItem>
-          <MobileListItem disablePadding>
-            <ListItem component={Link} to="/search" onClick={toggleMobileMenu}>
-              <Typography variant="h6">찾아보기</Typography>
-            </ListItem>
-          </MobileListItem>
-        </MobileList>
+        <MobileNavTop>
+          <CloseButton onClick={toggleMobileMenu}>
+            <CloseIcon fontSize="large" />
+          </CloseButton>
+          <MobileList>
+            <MobileListItem disablePadding>
+              <ListItem component={Link} to="/" onClick={toggleMobileMenu}>
+                <Typography variant="h6">홈</Typography>
+              </ListItem>
+            </MobileListItem>
+            <MobileListItem disablePadding>
+              <ListItem component={Link} to="/popular" onClick={toggleMobileMenu}>
+                <Typography variant="h6">대세 콘텐츠</Typography>
+              </ListItem>
+            </MobileListItem>
+            <MobileListItem disablePadding>
+              <ListItem component={Link} to="/wishlist" onClick={toggleMobileMenu}>
+                <Typography variant="h6">내가 찜한 리스트</Typography>
+              </ListItem>
+            </MobileListItem>
+            <MobileListItem disablePadding>
+              <ListItem component={Link} to="/search" onClick={toggleMobileMenu}>
+                <Typography variant="h6">찾아보기</Typography>
+              </ListItem>
+            </MobileListItem>
+          </MobileList>
+        </MobileNavTop>
+        <MobileNavBotton>
+          <MobileMenuButton onClick={toggleDarkMode}>
+            {localStorage.getItem('theme') === 'dark'
+              ? <BedtimeIcon />
+              : <BrightnessIcon />}
+          </MobileMenuButton>
+        </MobileNavBotton>
       </MobileNav>
     </Box>
   )
