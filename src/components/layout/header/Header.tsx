@@ -11,29 +11,31 @@ import {
   Close as CloseIcon,
 } from '@mui/icons-material'
 
+import { useTheme } from '../../../hooks/useTheme'
+
 import {
   AppHeader,
+  CloseButton,
+  DesktopListItem,
+  DesktopMenuButton,
+  DesktopNavLinks,
   HeaderLeft,
   HeaderRight,
-  Logo,
-  DesktopNavLinks,
   IconButtonStyled,
-  MobileMenuButton,
-  MobileNav,
-  CloseButton,
-  StyledList,
-  DesktopListItem,
+  Logo,
   MobileList,
   MobileListItem,
-  DesktopMenuButton,
-  MobileNavTop,
+  MobileMenuButton,
+  MobileNav,
   MobileNavBotton,
+  MobileNavTop,
+  StyledList,
 } from './Header.styles'
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => localStorage.getItem('theme') === 'dark')
+  const { toggleDarkmode } = useTheme()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -54,17 +56,6 @@ const Header: React.FC = () => {
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
-  }
-
-  const toggleDarkMode = () => {
-    if (isDarkMode) {
-      localStorage.setItem('theme', 'light')
-    } else {
-      localStorage.setItem('theme', 'dark')
-    }
-
-    setIsDarkMode(prev => !prev)
-    window.location.reload()
   }
 
   return (
@@ -102,7 +93,7 @@ const Header: React.FC = () => {
           </DesktopNavLinks>
         </HeaderLeft>
         <HeaderRight>
-          <DesktopMenuButton onClick={toggleDarkMode}>
+          <DesktopMenuButton onClick={toggleDarkmode}>
             {localStorage.getItem('theme') === 'dark'
               ? <BedtimeIcon />
               : <BrightnessIcon />}
@@ -145,7 +136,7 @@ const Header: React.FC = () => {
           </MobileList>
         </MobileNavTop>
         <MobileNavBotton>
-          <MobileMenuButton onClick={toggleDarkMode}>
+          <MobileMenuButton onClick={toggleDarkmode}>
             {localStorage.getItem('theme') === 'dark'
               ? <BedtimeIcon />
               : <BrightnessIcon />}
