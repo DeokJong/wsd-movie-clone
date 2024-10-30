@@ -14,7 +14,9 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "vite-plugin-eslint": ["./node_modules/vite-plugin-eslint/dist/index.d.ts"]
+      "vite-plugin-eslint": ["./node_modules/vite-plugin-eslint/dist/index.d.ts"],
+      "@/Core": ["./src/client/core"],
+      "@/Services": ["./src/client/services"],
     },
     /* Linting */
     "strict": true,
