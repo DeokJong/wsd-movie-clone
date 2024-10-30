@@ -1,9 +1,11 @@
-import { TDataMovie, TDataTV, DiscoverResponse } from './models'
+import { PublicFeature } from '../models'
+
+import { TDataMovie, TDataTV } from './models'
 
 import { OpenAPIMovieDB, CancelablePromise, request } from '@/Core'
 
 export class DiscoverService {
-  public static Movie(data?: TDataMovie): CancelablePromise<DiscoverResponse> {
+  public static Movie(data?: TDataMovie): CancelablePromise<PublicFeature> {
     return request(OpenAPIMovieDB, {
       ...data,
       method: 'GET',
@@ -12,7 +14,7 @@ export class DiscoverService {
     })
   }
 
-  public static TV(data?: TDataTV): CancelablePromise<DiscoverResponse> {
+  public static TV(data?: TDataTV): CancelablePromise<PublicFeature> {
     return request(OpenAPIMovieDB, {
       ...data,
       method: 'GET',

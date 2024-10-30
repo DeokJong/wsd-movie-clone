@@ -1,16 +1,16 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 
-import { DiscoverResults, DiscoverService } from '@/Services'
+import { DiscoverService, FeatureResults } from '@/Services'
 
-export const useMovie = () => {
+export const useDiscoverTV = () => {
   const [page, setPage] = useState(1)
 
-  const { data, error, isLoading } = useQuery<DiscoverResults[], Error>({
-    queryKey: ['discover', 'movie', page],
+  const { data, error, isLoading } = useQuery<FeatureResults[], Error>({
+    queryKey: ['discover', 'tv', page],
     queryFn: async () =>
       (
-        await DiscoverService.Movie({
+        await DiscoverService.TV({
           query: {
             page,
           },
