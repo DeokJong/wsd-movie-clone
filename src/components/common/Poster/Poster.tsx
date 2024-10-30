@@ -2,13 +2,16 @@ import React from 'react'
 
 import { PosterCard, PosterImage, PosterTitle } from './Poster.styles'
 
-import { useMovie } from '@/Hooks'
 import { DiscoverResults } from '@/Services'
 import { getImageURI } from '@/Utils'
 
-export const Poster: React.FC = () => {
-  const { data, isLoading, error } = useMovie()
+export type PosterProps = {
+  data: DiscoverResults[]
+  isLoading: boolean
+  error: Error | null
+}
 
+export const Poster: React.FC<PosterProps> = ({ data, isLoading, error }) => {
   if (error) {
     return <div>Error: {error.message}</div>
   }
