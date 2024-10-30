@@ -17,6 +17,9 @@
       "vite-plugin-eslint": ["./node_modules/vite-plugin-eslint/dist/index.d.ts"],
       "@/Core": ["./src/client/core"],
       "@/Services": ["./src/client/services"],
+      "@/Utils": ["./src/utils"],
+      "@/Components": ["./src/components"],
+      "@/Hooks": ["./src/hooks"],
     },
     /* Linting */
     "strict": true,
