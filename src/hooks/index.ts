@@ -1,2 +1,4 @@
 export * from './useTheme'
-export * from './useMovie'
+
+export * from './discover/useMovie'
+export * from './discover/useTV'
