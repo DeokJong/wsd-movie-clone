@@ -2,6 +2,7 @@ import { Button } from '@mui/material'
 import { createFileRoute } from '@tanstack/react-router'
 
 import { DiscoverService } from '@/Services'
+import { Poster } from '@/Components'
 
 export const Route = createFileRoute('/_layout/')({
   component: index,
@@ -18,6 +19,7 @@ function index() {
   return (
     <>
       <Button variant="contained" color="primary" onClick={callAPI} />
+      <Poster />
     </>
   )
 }
