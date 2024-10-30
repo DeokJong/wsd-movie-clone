@@ -31,7 +31,7 @@ import {
   StyledList,
 } from './Header.styles'
 
-const Header: React.FC = () => {
+export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
   const { toggleDarkmode, isDarkmode } = useTheme()
@@ -141,5 +141,3 @@ const Header: React.FC = () => {
     </Box>
   )
 }
-
-export default Header
