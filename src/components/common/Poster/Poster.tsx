@@ -23,7 +23,7 @@ export const Poster: React.FC<PosterProps> = ({ data, isLoading, error }) => {
         <PosterCard key={iter.id}>
           <PosterImage>
             <img
-              src={getImageURI(iter.poster_path ?? iter.profile_path ?? '', 'w500')}
+              src={getImageURI(iter.poster_path ?? iter.profile_path ?? '', 'w185')}
               alt={iter.title || iter.original_title}
             />
           </PosterImage>
