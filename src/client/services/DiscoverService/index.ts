@@ -1,2 +1,2 @@
 export * from './DiscoverService'
-export * from './models'
+export * from './models.d'

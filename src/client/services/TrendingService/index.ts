@@ -1,2 +1,2 @@
 export * from './TrendingService'
-export * from './models'
+export * from './models.d'
