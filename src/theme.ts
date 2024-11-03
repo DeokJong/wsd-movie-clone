@@ -15,13 +15,19 @@ declare module '@mui/material/styles/createPalette' {
   interface PaletteOptions {
     gradients?: {
       background?: string
-      otherbackground?: string
+    }
+    TypographyColor?: {
+      primary?: string
+      secondary?: string
     }
   }
   interface Palette {
     gradients: {
       background: string
-      otherbackground: string
+    }
+    TypographyColor: {
+      primary: string
+      secondary: string
     }
   }
 }
@@ -31,12 +37,6 @@ const baseTheme = createTheme({
     common: {
       black: '#000',
       white: '#fff',
-    },
-    primary: {
-      light: '#7986cb',
-      main: '#3f51b5',
-      dark: '#303f9f',
-      contrastText: '#fff',
     },
   },
   typography: {
@@ -117,6 +117,10 @@ const whiteTheme = deepmerge(baseTheme, {
     gradients: {
       background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
     },
+    TypographyColor: {
+      primary: '#000',
+      secondary: '#fff',
+    },
   },
 })
 
@@ -124,6 +128,10 @@ const darkTheme = deepmerge(baseTheme, {
   palette: {
     gradients: {
       background: 'linear-gradient(45deg, #019474 30%, #0071AC 90%)',
+    },
+    TypographyColor: {
+      primary: '#fff',
+      secondary: '#000',
     },
   },
 })

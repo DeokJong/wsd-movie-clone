@@ -1,67 +1,53 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { Grid } from '@mui/material'
 
 import { Poster } from '@/Components'
-import {
-  useDiscoverMovie,
-  useDiscoverTV,
-  useTrendingAll,
-  useTrendingMovies,
-  useTrendingPeople,
-  useTrendingTV,
-} from '@/Hooks'
+import { useTrendingMovies, usePopular } from '@/Hooks'
 
 export const Route = createFileRoute('/_layout/')({
   component: index,
 })
 
 function index() {
-  const { data: movieData, error: movieError, isLoading: movieIsLoading } = useDiscoverMovie()
-  const { data: tvData, error: tvError, isLoading: tvIsLoading } = useDiscoverTV()
   const {
-    data: trendingAllData,
-    error: trendingAllError,
-    isLoading: trendingAllIsLoading,
-  } = useTrendingAll()
-  const {
-    data: trendingMoviesData,
+    data: trendingMovies,
     error: trendingMoviesError,
-    isLoading: trendingMoviesIsLoading,
+    isLoading: isTrendingMoviesLoading,
   } = useTrendingMovies()
   const {
-    data: trendingPeopleData,
-    error: trendingPeopleError,
-    isLoading: trendingPeopleIsLoading,
-  } = useTrendingPeople()
-  const {
-    data: trendingTVData,
-    error: trendingTVError,
-    isLoading: trendingTVIsLoading,
-  } = useTrendingTV()
+    data: popularPeople,
+    error: popularPeopleError,
+    isLoading: isPopularPeopleLoading,
+  } = usePopular()
 
   return (
     <>
-      {movieData && <Poster data={movieData} isLoading={movieIsLoading} error={movieError} />}
-      {tvData && <Poster data={tvData} isLoading={tvIsLoading} error={tvError} />}
-      {trendingAllData && (
-        <Poster data={trendingAllData} isLoading={trendingAllIsLoading} error={trendingAllError} />
-      )}
-      {trendingMoviesData && (
-        <Poster
-          data={trendingMoviesData}
-          isLoading={trendingMoviesIsLoading}
-          error={trendingMoviesError}
-        />
-      )}
-      {trendingPeopleData && (
-        <Poster
-          data={trendingPeopleData}
-          isLoading={trendingPeopleIsLoading}
-          error={trendingPeopleError}
-        />
-      )}
-      {trendingTVData && (
-        <Poster data={trendingTVData} isLoading={trendingTVIsLoading} error={trendingTVError} />
-      )}
+      <h1>Discover Movie</h1>
+      <Grid
+        container
+        spacing={2}
+        sx={{
+          background: 'transparent',
+        }}
+      >
+        {!isTrendingMoviesLoading &&
+          trendingMovies?.map((data) => (
+            <Poster key={data.id} data={data} error={trendingMoviesError} />
+          ))}
+      </Grid>
+      <h1>Popular People</h1>
+      <Grid
+        container
+        spacing={2}
+        sx={{
+          background: 'transparent',
+        }}
+      >
+        {!isPopularPeopleLoading &&
+          popularPeople?.map((data) => (
+            <Poster key={data.id} data={data} error={popularPeopleError} />
+          ))}
+      </Grid>
     </>
   )
 }

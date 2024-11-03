@@ -1,34 +1,25 @@
 import React from 'react'
 
-import { PosterCard, PosterImage, PosterTitle } from './Poster.styles'
+import { PosterCard, PosterImage, PosterTitleContainer, PosterTitle } from './Poster.styles'
 
 import { FeatureResults } from '@/Services'
 import { getImageURI } from '@/Utils'
 
 export type PosterProps = {
-  data: FeatureResults[]
-  isLoading: boolean
+  data: FeatureResults
   error: Error | null
 }
 
-export const Poster: React.FC<PosterProps> = ({ data, isLoading, error }) => {
+export const Poster: React.FC<PosterProps> = ({ data, error }) => {
   if (error) {
-    return <div>Error: {error.message}</div>
+    return <div>{error.message}</div>
   }
-
-  return isLoading
-    ? <div>Loading...</div>
-    : <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-      {data?.map((iter: FeatureResults) => (
-        <PosterCard key={iter.id}>
-          <PosterImage>
-            <img
-              src={getImageURI(iter.poster_path ?? iter.profile_path ?? '', 'w185')}
-              alt={iter.title || iter.original_title}
-            />
-          </PosterImage>
-          <PosterTitle variant="body2">{iter.title || iter.original_title}</PosterTitle>
-        </PosterCard>
-      ))}
-    </div>
+  return (
+    <PosterCard>
+      <PosterImage src={data.poster_path ? getImageURI(data.poster_path, 'w500') : ''} alt={data.title} />
+      <PosterTitleContainer>
+        <PosterTitle variant="h6">{data.title}</PosterTitle>
+      </PosterTitleContainer>
+    </PosterCard>
+  )
 }
