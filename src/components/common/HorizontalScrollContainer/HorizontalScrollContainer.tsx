@@ -8,7 +8,10 @@ type HorizontalScrollContainerProps = {
   isLoading?: boolean
 }
 
-export const HorizontalScrollContainer: React.FC<HorizontalScrollContainerProps> = ({ children, isLoading }) => {
+export const HorizontalScrollContainer: React.FC<HorizontalScrollContainerProps> = ({
+  children,
+  isLoading,
+}) => {
   const scrollRef = useRef<HTMLDivElement>(null)
   const childRef = useRef<HTMLDivElement>(null)
   const [childWidth, setChildWidth] = useState(0)
@@ -31,7 +34,8 @@ export const HorizontalScrollContainer: React.FC<HorizontalScrollContainerProps>
       if (scrollRef.current && childWidth > 0 && event.deltaY !== 0) {
         const numChildren = Math.max(1, Math.floor(containerWidth / childWidth))
         const scrollAmount = childWidth * numChildren
-        const newScrollLeft = scrollRef.current.scrollLeft + (event.deltaY > 0 ? scrollAmount : -scrollAmount)
+        const newScrollLeft =
+          scrollRef.current.scrollLeft + (event.deltaY > 0 ? scrollAmount : -scrollAmount)
         scrollRef.current.scrollTo({ left: newScrollLeft, behavior: 'smooth' })
         event.preventDefault()
       }
@@ -47,6 +51,23 @@ export const HorizontalScrollContainer: React.FC<HorizontalScrollContainerProps>
         currentRef.removeEventListener('wheel', handleWheel)
       }
     }
+  }, [childWidth, containerWidth])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (scrollRef.current && childWidth > 0) {
+        const maxScrollLeft = scrollRef.current.scrollWidth - containerWidth
+        if (scrollRef.current.scrollLeft >= maxScrollLeft - 1) {
+          scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' })
+        } else {
+          const numChildren = Math.max(1, Math.floor(containerWidth / childWidth))
+          const newScrollLeft = scrollRef.current.scrollLeft + childWidth * numChildren
+          scrollRef.current.scrollTo({ left: newScrollLeft, behavior: 'smooth' })
+        }
+      }
+    }, 5000)
+
+    return () => clearInterval(interval)
   }, [childWidth, containerWidth])
 
   return (
