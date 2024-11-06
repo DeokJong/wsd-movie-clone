@@ -21,6 +21,8 @@ function index() {
 
   return (
     <>
+      {/* TODO 검색 바 */}
+      {/* TODO 최신 영화 및 TV */}
       <h1>Discover Movie</h1>
       <HorizontalScrollContainer isLoading={isTrendingMoviesLoading}>
         {!isTrendingMoviesLoading &&
@@ -31,10 +33,11 @@ function index() {
       <h1>Trending TV SHOW</h1>
       <HorizontalScrollContainer isLoading={isTrendingTVLoading}>
         {!isTrendingTVLoading &&
-          trendingTV?.map((data) => (
-            <Poster key={data.id} data={data} error={trendingTVError} />
-          ))}
+          trendingTV?.map((data) => <Poster key={data.id} data={data} error={trendingTVError} />)}
       </HorizontalScrollContainer>
+
+      {/* TODO 카테고리별 섹션 */}
+      {/* TODO 탐색 가능한 장르 */}
     </>
   )
 }
