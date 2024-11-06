@@ -1,6 +1,6 @@
 import { PublicFeature } from '../models'
 
-import { TDataTrending } from './models'
+import { TDataTrending } from './models.d'
 
 import { OpenAPIMovieDB, CancelablePromise, request } from '@/Core'
 

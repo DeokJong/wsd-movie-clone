@@ -12,7 +12,6 @@ function Layout() {
     <Box
       sx={{
         background: ($theme) => $theme.palette.gradients.background,
-        height: '100vh',
         display: 'flex',
         flexDirection: 'column',
       }}
@@ -34,7 +33,6 @@ function Layout() {
             md: 4, // 중간 화면에서 32px
             lg: 5, // 큰 화면에서 40px
           },
-          overflow: 'auto',
           display: 'flex',
           flexDirection: 'column',
           gap: 2, // Outlet 내부 요소 간 간격
