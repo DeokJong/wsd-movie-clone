@@ -1,8 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { Grid } from '@mui/material'
 
-import { Poster } from '@/Components'
-import { useTrendingMovies, usePopular } from '@/Hooks'
+import { Poster, HorizontalScrollContainer } from '@/Components'
+import { useTrendingMovies, useTrendingTV } from '@/Hooks'
 
 export const Route = createFileRoute('/_layout/')({
   component: index,
@@ -15,39 +14,27 @@ function index() {
     isLoading: isTrendingMoviesLoading,
   } = useTrendingMovies()
   const {
-    data: popularPeople,
-    error: popularPeopleError,
-    isLoading: isPopularPeopleLoading,
-  } = usePopular()
+    data: trendingTV,
+    error: trendingTVError,
+    isLoading: isTrendingTVLoading,
+  } = useTrendingTV()
 
   return (
     <>
       <h1>Discover Movie</h1>
-      <Grid
-        container
-        spacing={2}
-        sx={{
-          background: 'transparent',
-        }}
-      >
+      <HorizontalScrollContainer isLoading={isTrendingMoviesLoading}>
         {!isTrendingMoviesLoading &&
           trendingMovies?.map((data) => (
             <Poster key={data.id} data={data} error={trendingMoviesError} />
           ))}
-      </Grid>
-      <h1>Popular People</h1>
-      <Grid
-        container
-        spacing={2}
-        sx={{
-          background: 'transparent',
-        }}
-      >
-        {!isPopularPeopleLoading &&
-          popularPeople?.map((data) => (
-            <Poster key={data.id} data={data} error={popularPeopleError} />
+      </HorizontalScrollContainer>
+      <h1>Trending TV SHOW</h1>
+      <HorizontalScrollContainer isLoading={isTrendingTVLoading}>
+        {!isTrendingTVLoading &&
+          trendingTV?.map((data) => (
+            <Poster key={data.id} data={data} error={trendingTVError} />
           ))}
-      </Grid>
+      </HorizontalScrollContainer>
     </>
   )
 }
