@@ -18,7 +18,7 @@ export const Poster: React.FC<PosterProps> = ({ data, error }) => {
     <PosterCard>
       <PosterImage src={data.poster_path ? getImageURI(data.poster_path, 'w500') : ''} alt={data.title} />
       <PosterTitleContainer>
-        <PosterTitle variant="h6">{data.title}</PosterTitle>
+        <PosterTitle>{data.title ? data.title : data.name}</PosterTitle>
       </PosterTitleContainer>
     </PosterCard>
   )
