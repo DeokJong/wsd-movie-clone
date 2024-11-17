@@ -14,6 +14,8 @@ function Layout() {
         background: ($theme) => $theme.palette.gradients.background,
         display: 'flex',
         flexDirection: 'column',
+        minHeight: '100vh',
+        backgroundSize: 'cover',
       }}
     >
       <Header />
