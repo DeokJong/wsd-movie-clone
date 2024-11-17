@@ -29,9 +29,15 @@ export type FeatureResults = {
   profile_path?: string
 }
 
+export type DateRange = {
+  maximum: string
+  minimum: string
+}
+
 export type PublicFeature = {
   page: number
   results: FeatureResults[]
   total_pages: number
   total_results: number
+  dates?: DateRange // dates 필드 추가
 }
