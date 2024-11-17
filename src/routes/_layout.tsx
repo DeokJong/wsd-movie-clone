@@ -4,10 +4,10 @@ import { Box } from '@mui/material'
 import { Header } from '@/Components'
 
 export const Route = createFileRoute('/_layout')({
-  component: Layout,
+  component: layout,
 })
 
-function Layout() {
+function layout() {
   return (
     <Box
       sx={{
@@ -16,6 +16,7 @@ function Layout() {
         flexDirection: 'column',
         minHeight: '100vh',
         backgroundSize: 'cover',
+        overflow: 'auto'
       }}
     >
       <Header />
