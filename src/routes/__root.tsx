@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react'
 import { createRootRoute, Outlet } from '@tanstack/react-router'
+import { Box } from '@mui/material'
 
 const TanStackRouterDevtools =
   import.meta.env.VITE_ENV === 'production'
@@ -13,11 +14,18 @@ const TanStackRouterDevtools =
 
 export const Route = createRootRoute({
   component: () => (
-    <>
+    <Box
+      sx={{
+        overflow: 'hidden', // Hide overflow for the root
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
       <Outlet />
       <Suspense>
         <TanStackRouterDevtools />
       </Suspense>
-    </>
+    </Box>
   ),
 })
