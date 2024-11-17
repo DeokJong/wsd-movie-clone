@@ -122,6 +122,7 @@ const baseTheme = createTheme({
 
 const whiteTheme = deepmerge(baseTheme, {
   palette: {
+    mode: 'light',
     gradients: {
       background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
     },
@@ -138,6 +139,7 @@ const whiteTheme = deepmerge(baseTheme, {
 
 const darkTheme = deepmerge(baseTheme, {
   palette: {
+    mode: 'dark',
     gradients: {
       background: 'linear-gradient(45deg, #017060 30%, #005A8C 90%)',
     },
