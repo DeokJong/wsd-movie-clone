@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useAtom, atom } from 'jotai'
 import { Theme } from '@mui/material'
 
-import { whiteTheme, darkTheme } from '../theme'
+import { whiteTheme, darkTheme } from '../../theme'
 
 const darkmodeAtom = atom<boolean>(localStorage.getItem('theme') === 'dark')
 

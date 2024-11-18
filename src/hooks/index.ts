@@ -1,5 +1,2 @@
-export * from './useTheme'
-
-export * from './discover'
-export * from './trending'
-export * from './peopleLists'
+export * from './custom/useTheme'
+export * from './service'

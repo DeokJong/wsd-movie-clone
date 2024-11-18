@@ -10,7 +10,7 @@ import {
   Close as CloseIcon,
 } from '@mui/icons-material'
 
-import { useTheme } from '../../../hooks/useTheme'
+import { useTheme } from '../../../hooks/custom/useTheme'
 
 import {
   AppHeader,

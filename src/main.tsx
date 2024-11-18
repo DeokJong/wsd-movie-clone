@@ -6,7 +6,7 @@ import { Provider as JotaiProvider } from 'jotai'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import { routeTree } from './routeTree.gen'
-import { useTheme } from './hooks/useTheme'
+import { useTheme } from './hooks/custom/useTheme'
 
 const router = createRouter({ routeTree })
 
