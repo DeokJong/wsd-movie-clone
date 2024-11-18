@@ -8,9 +8,8 @@ import {
   Person as PersonIcon,
   Menu as MenuIcon,
   Close as CloseIcon,
+  Logout as LogoutIcon,
 } from '@mui/icons-material'
-
-import { useTheme } from '../../../hooks/custom/useTheme'
 
 import {
   AppHeader,
@@ -31,10 +30,13 @@ import {
   StyledList,
 } from './Header.styles'
 
+import { useAuth, useTheme } from '@/Hooks'
+
 export const Header: React.FC = () => {
+  const { isLogin, logout } = useAuth()
+  const { toggleDarkmode, isDarkmode } = useTheme()
   const [isScrolled, setIsScrolled] = useState<boolean>(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
-  const { toggleDarkmode, isDarkmode } = useTheme()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -93,11 +95,16 @@ export const Header: React.FC = () => {
         </HeaderLeft>
         <HeaderRight>
           <DesktopMenuButton>
-            <DarkModeSwitch sunColor='white' onChange={toggleDarkmode} checked={isDarkmode} />
+            <DarkModeSwitch sunColor="white" onChange={toggleDarkmode} checked={isDarkmode} />
           </DesktopMenuButton>
-          <IconButtonStyled onClick={removeKey}>
-            <PersonIcon fontSize="large" style={{ color: '#FFFFFF' }} />
-          </IconButtonStyled>
+          { isLogin
+            ? <IconButtonStyled onClick={logout}>
+              <LogoutIcon fontSize="large" style={{ color: '#FFFFFF' }} />
+            </IconButtonStyled>
+            : <IconButtonStyled onClick={removeKey}>
+              <PersonIcon fontSize="large" style={{ color: '#FFFFFF' }} />
+            </IconButtonStyled>
+          }
           <MobileMenuButton onClick={toggleMobileMenu}>
             <MenuIcon fontSize="large" />
           </MobileMenuButton>
@@ -134,7 +141,7 @@ export const Header: React.FC = () => {
         </MobileNavTop>
         <MobileNavBotton>
           <MobileMenuButton>
-            <DarkModeSwitch sunColor='white' onChange={toggleDarkmode} checked={isDarkmode} />
+            <DarkModeSwitch sunColor="white" onChange={toggleDarkmode} checked={isDarkmode} />
           </MobileMenuButton>
         </MobileNavBotton>
       </MobileNav>
