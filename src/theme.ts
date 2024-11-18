@@ -15,6 +15,7 @@ declare module '@mui/material/styles/createPalette' {
   interface PaletteOptions {
     gradients?: {
       background?: string
+      complementary?: string
     }
     TypographyColor?: {
       primary?: string
@@ -24,10 +25,16 @@ declare module '@mui/material/styles/createPalette' {
       primary?: string
       secondary?: string
     }
+    concept?: {
+      primary?: string
+      secondary?: string
+      complementary?: string
+    }
   }
   interface Palette {
     gradients: {
       background: string
+      complementary: string
     }
     TypographyColor: {
       primary: string
@@ -36,6 +43,11 @@ declare module '@mui/material/styles/createPalette' {
     TypographyBackground: {
       primary: string
       secondary: string
+    }
+    concept: {
+      primary: string
+      secondary: string
+      complementary: string
     }
   }
 }
@@ -125,6 +137,7 @@ const whiteTheme = deepmerge(baseTheme, {
     mode: 'light',
     gradients: {
       background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+      complementary: 'linear-gradient(45deg, #017060 30%, #005A8C 90%)',
     },
     TypographyColor: {
       primary: '#1a1a1a',
@@ -133,6 +146,11 @@ const whiteTheme = deepmerge(baseTheme, {
     TypographyBackground: {
       primary: '#d0d0d0', // Darker primary background
       secondary: '#a0a0a0', // Slightly darker complementary color
+    },
+    concept: {
+      primary: '#FE99A0',
+      secondary: '#FF8A73',
+      complementary: '#01A474',
     }
   },
 })
@@ -142,6 +160,7 @@ const darkTheme = deepmerge(baseTheme, {
     mode: 'dark',
     gradients: {
       background: 'linear-gradient(45deg, #017060 30%, #005A8C 90%)',
+      complementary: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
     },
     TypographyColor: {
       primary: '#b0b0b0', // Darker primary color
@@ -150,7 +169,12 @@ const darkTheme = deepmerge(baseTheme, {
     TypographyBackground: {
       primary: '#0f0f0f',
       secondary: '#a0a0a0', // Slightly darker complementary color
-    }
+    },
+    concept: {
+      primary: '#017060',
+      secondary: '#005A8C',
+      complementary: '#FE6B8B',
+    },
   },
 })
 
