@@ -1,2 +1,3 @@
-export * from './custom/useTheme'
+export * from './custom'
+
 export * from './service'

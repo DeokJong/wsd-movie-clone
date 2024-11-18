@@ -1,93 +1,100 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 
-type User = {
-  username: string
+import { errors } from '@/Constant'
+
+export type User = {
+  email: string
   password: string
 }
 
-type Register = {
-  username: string
+export type Register = {
+  email: string
   password: string
   confirmPassword: string
   fullName: string
 }
 
-type AuthUser = {
+export type AuthUser = {
   username: string
   fullName: string
 }
 
+export class AuthError extends Error {
+  code: number
+
+  constructor(code: number, message?: string) {
+    const errorMessage =
+      message ? `${code}: ${message}` : `${code}: ${errors[code] || 'An error occurred'}`
+    super(errorMessage)
+    this.code = code
+    this.name = 'AuthError'
+  }
+}
+
+const isAuthenticated = () => {
+  return localStorage.getItem('currentUser') !== null
+}
+
+const checkRememberMe = () => {
+  return localStorage.getItem('rememberMe') === 'true'
+}
+
+const setRememberMe = (value: boolean) => {
+  localStorage.setItem('rememberMe', value.toString())
+}
+
 export const useAuth = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [currentUser, setCurrentUser] = useState<AuthUser | null>(null)
+  const queryClient = useQueryClient()
+  const [isLogin, setIsLogin] = useState<boolean | null>(null)
 
-  useEffect(() => {
-    const rememberMe = checkRememberMe()
-    const savedUserString = localStorage.getItem('currentUser')
-
-    if (rememberMe && savedUserString) {
-      try {
-        const savedUser: AuthUser = JSON.parse(savedUserString)
-        setIsAuthenticated(true)
-        setCurrentUser(savedUser)
-      } catch (error) {
-        console.error('Failed to parse currentUser from localStorage:', error)
-        setIsAuthenticated(false)
-        setCurrentUser(null)
-        localStorage.removeItem('currentUser')
-      }
-    }
-  }, [])
-
-  const checkRememberMe = () => {
-    return localStorage.getItem('rememberMe') === 'true'
-  }
-
-  const setRememberMe = (value: boolean) => {
-    localStorage.setItem('rememberMe', value.toString())
-  }
-
-  const register = ({ username, password, confirmPassword, fullName }: Register) => {
+  const register = ({ email, password, confirmPassword, fullName }: Register) => {
     if (password !== confirmPassword) {
-      throw new Error('Not matched password')
+      throw new AuthError(400) // 400 Bad Request
     }
-
-    localStorage.setItem(`user:${username}`, password)
-    localStorage.setItem(`user:${username}:fullName`, fullName)
+    if (localStorage.getItem(`user:${email}`)) {
+      throw new AuthError(409) // 409 Conflict
+    }
+    localStorage.setItem(`user:${email}`, password)
+    localStorage.setItem(`user:${email}:fullName`, fullName)
   }
 
-  const login = ({ username, password }: User, rememberMe: boolean = false) => {
-    const storedPassword = localStorage.getItem(`user:${username}`)
-
+  const login = ({ email, password }: User, rememberMe: boolean = false) => {
+    const storedPassword = localStorage.getItem(`user:${email}`)
+    if (!storedPassword) {
+      throw new AuthError(404, 'User not found')
+    }
     if (storedPassword === password) {
-      const fullName = localStorage.getItem(`user:${username}:fullName`) || ''
-      const userObj: AuthUser = { username, fullName }
+      const fullName = localStorage.getItem(`user:${email}:fullName`) || ''
+      const userObj: AuthUser = { username: email, fullName }
 
-      setIsAuthenticated(true)
-      setCurrentUser(userObj)
       localStorage.setItem('currentUser', JSON.stringify(userObj))
-
       if (rememberMe) {
         setRememberMe(true)
       }
-      return true
+      queryClient.setQueryData(['currentUser'], userObj)
+      setIsLogin(true)
+    } else {
+      throw new AuthError(401, 'Invalid password')
     }
-
-    return false
   }
 
   const logout = () => {
-    setIsAuthenticated(false)
-    setCurrentUser(null)
     localStorage.removeItem('currentUser')
     setRememberMe(false)
+    setIsLogin(false)
+
+    // Invalidate the 'currentUser' query to refetch
+    queryClient.invalidateQueries({ queryKey: ['currentUser'] })
   }
 
   return {
+    checkRememberMe,
     isAuthenticated,
-    currentUser,
     register,
     login,
     logout,
+    isLogin,
+    setIsLogin,
   }
 }
