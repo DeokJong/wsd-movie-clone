@@ -1,25 +1,65 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { AuthUser, useAuth } from './useAuth'
+import { useAuth } from './useAuth'
+
+type WishPublic = {
+  id: string
+  timeStamps: string
+}
+
+type UserPublic = {
+  fullName: string
+  wishList: WishPublic[]
+}
 
 export const useUserData = () => {
-  const { isAuthenticated } = useAuth()
+  const { isLogin, email } = useAuth()
+  const queryClient = useQueryClient()
 
   const {
-    data: userFullName,
-    isLoading: isLoadingUserFullName,
-    error: userFullNameError,
-  } = useQuery<string | null, Error>({
-    queryKey: ['currentUser'],
+    data: userData,
+    isLoading: isLoadinguserData,
+    error: userDataError,
+  } = useQuery<UserPublic | null, Error>({
+    queryKey: ['userData', email],
     queryFn: () => {
-      const user = localStorage.getItem('currentUser') as unknown as AuthUser
-      if (user) {
-        return user.fullName
-      }
-      return null
+      return {
+        fullName: localStorage.getItem(`user:${email}:fullName`) || '',
+        wishList: JSON.parse(localStorage.getItem(`user:${email}:wishList`) || '[]'),
+      } as UserPublic
     },
-    enabled: isAuthenticated,
+    enabled: () => isLogin,
   })
 
-  return { userFullName, isLoadingUserFullName, userFullNameError }
+  const userDataMutation = useMutation<WishPublic[], Error, WishPublic[]>({
+    mutationFn: async (data: WishPublic[]) => {
+      data.sort((a, b) => new Date(b.timeStamps).getTime() - new Date(a.timeStamps).getTime())
+      localStorage.setItem(`user:${email}:wishList`, JSON.stringify(data))
+      return data
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['userData', email] })
+    },
+  })
+
+  const appendWishList = (id: string) => {
+    const wishList = userData?.wishList || []
+    const newWishList = [...wishList, { id, timeStamps: new Date().toISOString() }]
+    userDataMutation.mutate(newWishList)
+  }
+
+  const removeWishList = (id: string) => {
+    const wishList = userData?.wishList || []
+    const newWishList = wishList.filter((wish) => wish.id !== id)
+    userDataMutation.mutate(newWishList)
+  }
+
+  return {
+    userData,
+    isLoadinguserData,
+    userDataError,
+    userDataMutation,
+    appendWishList,
+    removeWishList,
+  }
 }
