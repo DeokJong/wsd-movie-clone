@@ -48,6 +48,7 @@ export const loginStyles: { [key: string]: SxProps<Theme> } = {
   form: (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column',
+    background: 'transparent',
     gap: 3,
     width: '100%',
     maxWidth: 500,
@@ -131,7 +132,7 @@ export const loginStyles: { [key: string]: SxProps<Theme> } = {
       },
     },
     '& input:-webkit-autofill': {
-      backgroundColor: 'transparent !important',
+      backgroundColor: 'transparent',
       color: theme.palette.TypographyColor.primary,
     },
     '& input:-webkit-autofill::first-line': {
