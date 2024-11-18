@@ -1,6 +1,4 @@
 import { useEffect } from 'react'
-import { useQueryClient } from '@tanstack/react-query'
-import { atomWithDefault } from 'jotai/utils'
 import { atom, useAtom } from 'jotai'
 
 import { errors } from '@/Constant'
@@ -10,15 +8,10 @@ export type TDataLogin = {
   password: string
 }
 
-export type Register = {
+export type TDataRegister = {
   email: string
   password: string
   confirmPassword: string
-  fullName: string
-}
-
-export type AuthUser = {
-  username: string
   fullName: string
 }
 
@@ -34,51 +27,57 @@ export class AuthError extends Error {
   }
 }
 
+const getLocalStorage = (key: string) => {
+  return localStorage.getItem(key)
+}
+
+const getSessionStorage = (key: string) => {
+  return sessionStorage.getItem(key)
+}
+
 const isRememberMe = () => {
   return localStorage.getItem('isRememberMe') === 'true'
 }
 
-const setIsRememberMe = (value: boolean) => {
-  localStorage.setItem('isRememberMe', value.toString())
-}
-
-const getCurrentUserEmail = () => {
-  return localStorage.getItem('currentUser') || ''
-}
-
-const setCurrentUserEmail = (email: string) => {
-  localStorage.setItem('currentUser', email)
-}
-
-const isLoginWithEmail = () => {
-  return !!getCurrentUserEmail()
+export const isAuth = () => {
+  return localStorage.getItem('email') || sessionStorage.getItem('email')
 }
 
 const loginAtom = atom<boolean>(false)
+const emailAtom = atom<string | null>(null)
 
 export const useAuth = () => {
-  const queryClient = useQueryClient()
   const [isLogin, setIsLogin] = useAtom<boolean>(loginAtom)
+  const [email, setEmail] = useAtom<string | null>(emailAtom)
 
   useEffect(() => {
-    const isRemember = isRememberMe()
-    if (isRemember) {
-      setIsLogin(true)
+    if (isRememberMe()) {
+      if (getLocalStorage('email')) {
+        setEmail(getLocalStorage('email'))
+        setIsLogin(true)
+      }
+    } else {
+      if (getSessionStorage('email')) {
+        setEmail(getSessionStorage('email'))
+        setIsLogin(true)
+      }
     }
-  }, [setIsLogin])
+  }, [])
 
-  const register = ({ email, password, confirmPassword, fullName }: Register) => {
+  const register = ({ email, password, confirmPassword, fullName }: TDataRegister) => {
     if (password !== confirmPassword) {
-      throw new AuthError(400)
+      throw new AuthError(400, 'Password and confirm password do not match')
     }
+
     if (localStorage.getItem(`user:${email}:password`)) {
-      throw new AuthError(409)
+      throw new AuthError(409, 'Email already exists')
     }
+
     localStorage.setItem(`user:${email}:password`, password)
     localStorage.setItem(`user:${email}:fullName`, fullName)
   }
 
-  const login = ({ email, password }: TDataLogin, isRemeberMe: boolean) => {
+  const login = ({ email, password }: TDataLogin, isRememberMe: boolean) => {
     const storedPassword = localStorage.getItem(`user:${email}:password`)
     if (!storedPassword) {
       throw new AuthError(404, 'User not found')
@@ -86,25 +85,24 @@ export const useAuth = () => {
       throw new AuthError(401, 'Invalid password')
     }
 
-    if (isRemeberMe) {
-      setIsRememberMe(true)
+    if (isRememberMe) {
+      localStorage.setItem('isRememberMe', 'true')
+      localStorage.setItem('email', email)
+    } else {
+      localStorage.setItem('isRememberMe', 'false')
+      sessionStorage.setItem('email', email)
     }
-
-    setCurrentUserEmail(email)
-    setIsLogin(true)
   }
 
   const logout = () => {
-    localStorage.removeItem('currentUser')
+    localStorage.removeItem('email')
+    sessionStorage.removeItem('email')
     localStorage.removeItem('isRememberMe')
-    setIsRememberMe(false)
     setIsLogin(false)
-    queryClient.invalidateQueries({ queryKey: ['currentUser'] })
   }
 
   return {
-    isRememberMe,
-    isAuthenticated: () => isLogin,
+    email,
     register,
     login,
     logout,
