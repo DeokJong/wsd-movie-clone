@@ -39,8 +39,8 @@ const isRememberMe = () => {
   return localStorage.getItem('isRememberMe') === 'true'
 }
 
-export const isAuth = () => {
-  return localStorage.getItem('email') || sessionStorage.getItem('email')
+export const isAuth = (): boolean => {
+  return isRememberMe() ? !!localStorage.getItem('email') : !!sessionStorage.getItem('email')
 }
 
 const loginAtom = atom<boolean>(false)

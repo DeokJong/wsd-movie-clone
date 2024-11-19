@@ -55,7 +55,8 @@ export const useUserData = () => {
   }
 
   return {
-    userData,
+    fullName: userData?.fullName || '',
+    wishList: userData?.wishList || [],
     isLoadinguserData,
     userDataError,
     userDataMutation,
