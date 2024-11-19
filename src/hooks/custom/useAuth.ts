@@ -1,11 +1,12 @@
 import { useEffect } from 'react'
 import { atom, useAtom } from 'jotai'
 
+import { BcryptEncoder } from '@/Utils'
 import { errors } from '@/Constant'
 
 export type TDataLogin = {
   email: string
-  password: string
+  rawPassword: string
 }
 
 export type TDataRegister = {
@@ -73,15 +74,15 @@ export const useAuth = () => {
       throw new AuthError(409, 'Email already exists')
     }
 
-    localStorage.setItem(`user:${email}:password`, password)
+    localStorage.setItem(`user:${email}:password`, BcryptEncoder.hash(password))
     localStorage.setItem(`user:${email}:fullName`, fullName)
   }
 
-  const login = ({ email, password }: TDataLogin, isRememberMe: boolean) => {
+  const login = ({ email, rawPassword }: TDataLogin, isRememberMe: boolean) => {
     const storedPassword = localStorage.getItem(`user:${email}:password`)
     if (!storedPassword) {
       throw new AuthError(404, 'User not found')
-    } else if (storedPassword !== password) {
+    } else if (!BcryptEncoder.compare(rawPassword, storedPassword)) {
       throw new AuthError(401, 'Invalid password')
     }
 
