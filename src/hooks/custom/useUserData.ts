@@ -18,7 +18,7 @@ export const useUserData = () => {
 
   const {
     data: userData,
-    isLoading: isLoadinguserData,
+    isLoading: isLoadingUserData,
     error: userDataError,
   } = useQuery<UserPublic | null, Error>({
     queryKey: ['userData', email],
@@ -55,8 +55,9 @@ export const useUserData = () => {
   }
 
   return {
-    userData,
-    isLoadinguserData,
+    fullName: userData?.fullName || '',
+    wishListData: userData?.wishList || [],
+    isLoadingUserData,
     userDataError,
     userDataMutation,
     appendWishList,

@@ -132,14 +132,10 @@ export const loginStyles: { [key: string]: SxProps<Theme> } = {
       },
     },
     '& input:-webkit-autofill': {
-      backgroundColor: 'transparent',
+      backgroundColor: 'transparent !important', // 투명 배경 설정
       color: theme.palette.TypographyColor.primary,
-    },
-    '& input:-webkit-autofill::first-line': {
-      color: theme.palette.TypographyColor.primary,
-    },
-    '& input:-webkit-autofill:hover, & input:-webkit-autofill:focus': {
-      transition: 'background-color 5000s ease-in-out 0s',
+      boxShadow: '0 0 0px 1000px transparent inset !important', // 투명 유지
+      transition: 'background-color 5000s ease-in-out 0s', // 호버, 포커스에서도 동일한 스타일 유지
     },
   }),
   checkboxLabel: (theme: Theme) => ({

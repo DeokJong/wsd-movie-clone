@@ -38,7 +38,7 @@ export const LoginPaper: React.FC<{ onSignUpClick: () => void }> = ({ onSignUpCl
   const onSubmit = (data: FormData) => {
     const { email, password, rememberMe } = data
     try {
-      login({ email, password }, rememberMe)
+      login({ email, rawPassword: password }, rememberMe)
       navigate({ to: '/' })
     } catch (error: unknown) {
       if (error instanceof AuthError) {
