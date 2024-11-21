@@ -1,3 +1,4 @@
+import { Box } from '@mui/material'
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { isAuth, useUserData } from '@/Hooks'
@@ -21,19 +22,17 @@ function wishlist() {
 
   return (
     <>
-      {wishListData.length === 0
-        ? <div>
-          <h1>Wishlist</h1>
-          <p>Your wishlist is empty.</p>
-        </div>
-        : <div>
-          <h1>Wishlist</h1>
-          <ul>
+      {<Box>
+        <h1>Wishlist</h1>
+        {wishListData.length === 0
+          ? <p>Your wishlist is empty.</p>
+          : <ul>
             {wishListData.map((item) => (
-              <li key={item.id}>{item.timeStamps}</li>
+              <li key={item.id}></li>
             ))}
           </ul>
-        </div>
+        }
+      </Box>
       }
     </>
   )
