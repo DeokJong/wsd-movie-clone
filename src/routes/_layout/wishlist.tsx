@@ -13,10 +13,15 @@ export const Route = createFileRoute('/_layout/wishlist')({
 })
 
 function wishlist() {
-  const { wishList } = useUserData()
+  const { wishListData, isLoadingUserData } = useUserData()
+
+  if (isLoadingUserData) {
+    return <p>Loading...</p>
+  }
+
   return (
     <>
-      {wishList.length === 0
+      {wishListData.length === 0
         ? <div>
           <h1>Wishlist</h1>
           <p>Your wishlist is empty.</p>
@@ -24,7 +29,7 @@ function wishlist() {
         : <div>
           <h1>Wishlist</h1>
           <ul>
-            {wishList.map((item) => (
+            {wishListData.map((item) => (
               <li key={item.id}>{item.timeStamps}</li>
             ))}
           </ul>
