@@ -2,11 +2,16 @@ import React from 'react'
 
 import { PosterCard, PosterImage, PosterTitleContainer, PosterTitle } from './Poster.styles'
 
-import { FeatureResults } from '@/Services'
 import { getImageURI } from '@/Utils'
 
+type PosterData = {
+  title: string
+  image_path: string
+  id: number
+}
+
 export type PosterProps = {
-  data: FeatureResults
+  data: PosterData
   error: Error | null
 }
 
@@ -16,9 +21,9 @@ export const Poster: React.FC<PosterProps> = ({ data, error }) => {
   }
   return (
     <PosterCard>
-      <PosterImage src={data.poster_path ? getImageURI(data.poster_path, 'w500') : ''} alt={data.title} />
+      <PosterImage src={data.image_path ? getImageURI(data.image_path, 'w500') : ''} alt={data.id.toString()} />
       <PosterTitleContainer>
-        <PosterTitle>{data.title ? data.title : data.name}</PosterTitle>
+        <PosterTitle>{data.title}</PosterTitle>
       </PosterTitleContainer>
     </PosterCard>
   )
