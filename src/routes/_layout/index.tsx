@@ -33,6 +33,7 @@ function index() {
                 ...data,
                 image_path: data.poster_path || '',
                 title: data.title || data.name || '',
+                media_type: data.media_type || '',
               }}
               error={trendingMoviesError}
             />
@@ -48,6 +49,7 @@ function index() {
                 ...data,
                 image_path: data.poster_path || '',
                 title: data.title || data.name || '',
+                media_type: data.media_type || '',
               }}
               error={trendingTVError}
             />
