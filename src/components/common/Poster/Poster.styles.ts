@@ -10,9 +10,19 @@ export const PosterCard = styled(Card)(({ theme }) => ({
   borderRadius: theme.shape.borderRadius * 2,
   boxShadow: theme.shadows[3],
   flexShrink: 0,
+  transition: 'transform 0.3s ease',
+  '&:hover': {
+    transform: 'scale(1.05)',
+  },
   [theme.breakpoints.down('sm')]: {
     width: 120,
     margin: theme.spacing(1),
+    '&:hover': {
+      transform: 'none',
+    },
+    '&:active': {
+      transform: 'scale(1.05)',
+    },
   },
 }))
 
