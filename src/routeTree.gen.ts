@@ -17,6 +17,7 @@ import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as LayoutWishlistImport } from './routes/_layout/wishlist'
 import { Route as LayoutSearchImport } from './routes/_layout/search'
 import { Route as LayoutPopularImport } from './routes/_layout/popular'
+import { Route as LayoutDetailIdMediatypeImport } from './routes/_layout/detail.$id.$media_type'
 
 // Create/Update Routes
 
@@ -47,6 +48,11 @@ const LayoutSearchRoute = LayoutSearchImport.update({
 
 const LayoutPopularRoute = LayoutPopularImport.update({
   path: '/popular',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutDetailIdMediatypeRoute = LayoutDetailIdMediatypeImport.update({
+  path: '/detail/$id/$media_type',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -96,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIndexImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/detail/$id/$media_type': {
+      id: '/_layout/detail/$id/$media_type'
+      path: '/detail/$id/$media_type'
+      fullPath: '/detail/$id/$media_type'
+      preLoaderRoute: typeof LayoutDetailIdMediatypeImport
+      parentRoute: typeof LayoutImport
+    }
   }
 }
 
@@ -107,6 +120,7 @@ export const routeTree = rootRoute.addChildren({
     LayoutSearchRoute,
     LayoutWishlistRoute,
     LayoutIndexRoute,
+    LayoutDetailIdMediatypeRoute,
   }),
   SigninRoute,
 })
@@ -129,7 +143,8 @@ export const routeTree = rootRoute.addChildren({
         "/_layout/popular",
         "/_layout/search",
         "/_layout/wishlist",
-        "/_layout/"
+        "/_layout/",
+        "/_layout/detail/$id/$media_type"
       ]
     },
     "/signin": {
@@ -149,6 +164,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_layout/": {
       "filePath": "_layout/index.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/detail/$id/$media_type": {
+      "filePath": "_layout/detail.$id.$media_type.tsx",
       "parent": "/_layout"
     }
   }
