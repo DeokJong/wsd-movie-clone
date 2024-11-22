@@ -20,15 +20,11 @@ export type PosterProps = {
 export const Poster: React.FC<PosterProps> = ({ data, error }) => {
   const navigate = useNavigate()
 
-  const handleClick = () => {
-    navigate({ to: `/detail/${data.id}/${data.media_type}` })
-  }
-
   if (error) {
     return <div>{error.message}</div>
   }
   return (
-    <PosterCard onClick={handleClick}>
+    <PosterCard onClick={() => navigate({ to: `/detail/${data.id}/${data.media_type}` })}>
       <PosterImage
         src={data.image_path ? getImageURI(data.image_path, 'w500') : ''}
         alt={`${data.id.toString()} ${data.media_type}`}
