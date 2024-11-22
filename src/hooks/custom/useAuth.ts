@@ -100,6 +100,7 @@ export const useAuth = () => {
     sessionStorage.removeItem('email')
     localStorage.removeItem('isRememberMe')
     setIsLogin(false)
+    window.location.reload()
   }
 
   return {
