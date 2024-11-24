@@ -44,21 +44,18 @@ jobs:
         run: npm install
 
       - name: Build the project
-        working-directory: ${{ github.workspace }}
         run: npm run build
 
       - name: Debug Build Directory
         run: |
           echo "Current Directory: $(pwd)"
-          echo "Workspace Directory: ${{ github.workspace }}"
-          ls -la ${{ github.workspace }}/dist
+          ls -la ./dist
 
       - name: Upload build artifact
-        if: success()
         uses: actions/upload-artifact@v3
         with:
           name: vite-react-build
-          path: ${{ github.workspace }}/dist
+          path: ./dist
 
   # Stage 2: Deploy to GitHub Pages
   deploy:
@@ -74,15 +71,12 @@ jobs:
       - name: Debug Artifact
         run: |
           echo "Current Directory: $(pwd)"
-          cd .. 
-          cd ..
-          echo "Current Directory: $(pwd)"
-          ls -rl
+          ls -la ./dist
 
       - name: Upload artifact to GitHub Pages
         uses: actions/upload-pages-artifact@v2
         with:
-          path: ${{ github.workspace }}/dist
+          path: ./dist
 
       - name: Deploy to GitHub Pages
         id: deployment
