@@ -83,8 +83,12 @@ export const detailStyles: { [key: string]: SxProps<Theme> } = {
     margin: '1rem 0',
     backgroundColor: 'rgba(255, 255, 255, 0.5)', // Divider 색상
   },
-  bookmarkButton: {
+  bookmarkAddButton: {
     color: 'red', // 북마크 버튼 색상
     fontsize: 20, // 북마크 버튼 크기
-  }
+  },
+  bookmarkRemoveButton: {
+    color: 'blue', // 북마크 버튼 색상
+    fontsize: 20, // 북마크 버튼 크기
+  },
 }
