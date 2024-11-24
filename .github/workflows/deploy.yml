@@ -26,7 +26,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '20'
 
       - name: Configure Environment Variables
         env:
@@ -44,20 +44,21 @@ jobs:
         run: npm install
 
       - name: Build the project
+        working-directory: ${{ github.workspace }}
         run: npm run build
 
       - name: Debug Build Directory
         run: |
           echo "Current Directory: $(pwd)"
           echo "Workspace Directory: ${{ github.workspace }}"
-          ls -la ./dist # dist 디렉토리가 생성되었는지 확인
+          ls -la ${{ github.workspace }}/dist
 
       - name: Upload build artifact
-        if: success() # 빌드가 성공적으로 완료된 경우에만 실행
+        if: success()
         uses: actions/upload-artifact@v3
         with:
           name: vite-react-build
-          path: ./dist
+          path: ${{ github.workspace }}/dist
 
   # Stage 2: Deploy to GitHub Pages
   deploy:
@@ -73,7 +74,8 @@ jobs:
       - name: Debug Artifact
         run: |
           echo "Current Directory: $(pwd)"
-          ls -la ./dist # 다운로드된 파일 확인
+          cd ..
+          ls -la ./dist
 
       - name: Upload artifact to GitHub Pages
         uses: actions/upload-pages-artifact@v2
