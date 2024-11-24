@@ -43,10 +43,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build React app
-        run: npm run build
+      - name: Debug Build Directory
+        run: ls -la ./dist # dist 디렉토리가 생성되었는지 확인
 
       - name: Upload build artifact
+        if: success() # 빌드가 성공적으로 완료된 경우에만 실행
         uses: actions/upload-artifact@v3
         with:
           name: vite-react-build
@@ -62,6 +63,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: vite-react-build
+
+      - name: Debug Artifact
+        run: ls -la ./dist # 다운로드된 파일 확인
 
       - name: Upload artifact to GitHub Pages
         uses: actions/upload-pages-artifact@v2
