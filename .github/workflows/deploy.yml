@@ -1,0 +1,73 @@
+name: Deploy React app to GitHub Pages with Environment Variables
+
+on:
+  push:
+    branches: ["feature/CI-CD"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Stage 1: Build React app
+  build:
+    name: Build Vite React App
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Configure Environment Variables
+        env:
+          VITE_ACCESS_TOKEN: ${{ secrets.VITE_ACCESS_TOKEN }}
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+          VITE_IMAGE_BASE_URL: ${{ secrets.VITE_IMAGE_BASE_URL }}
+          VITE_ENV: ${{ secrets.VITE_ENV }}
+        run: |
+          echo "VITE_ACCESS_TOKEN=${VITE_ACCESS_TOKEN}" >> .env
+          echo "VITE_API_URL=${VITE_API_URL}" >> .env
+          echo "VITE_IMAGE_BASE_URL=${VITE_IMAGE_BASE_URL}" >> .env
+          echo "VITE_ENV=${VITE_ENV}" >> .env
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build React app
+        run: npm run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: vite-react-build
+          path: ./dist
+
+  # Stage 2: Deploy to GitHub Pages
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: vite-react-build
+
+      - name: Upload artifact to GitHub Pages
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: ./dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
