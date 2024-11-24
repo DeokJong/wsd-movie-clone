@@ -13,10 +13,11 @@ export const PosterCard = styled(Card)(({ theme }) => ({
   transition: 'transform 0.3s ease',
   '&:hover': {
     transform: 'scale(1.05)',
+    transition: 'transform 0.3s ease',
   },
   [theme.breakpoints.down('sm')]: {
-    width: 120,
-    margin: theme.spacing(1),
+    width: 100,
+    margin: theme.spacing(0.5),
     '&:hover': {
       transform: 'none',
     },
