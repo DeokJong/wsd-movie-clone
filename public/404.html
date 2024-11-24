@@ -12,6 +12,7 @@
       if (!currentPath.startsWith(basePath)) {
         // 현재 경로를 유지하면서 루트 경로로 이동
         const newPath = basePath + currentPath.slice(1);
+        console.log(newPath);
         window.location.replace(newPath);
       }
     </script>
