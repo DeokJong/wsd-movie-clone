@@ -11,13 +11,22 @@ jobs:
     name: Build Vite React App
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: checkout Github Action
         uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
+
+      - name: Cache node_modules
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Configure Environment Variables
         env:
@@ -36,11 +45,6 @@ jobs:
 
       - name: Build the project
         run: npm run build
-
-      - name: Debug Build Directory
-        run: |
-          echo "Current Directory: $(pwd)"
-          ls -la ./dist
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v3
