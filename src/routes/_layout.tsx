@@ -25,14 +25,14 @@ function layout() {
           flexGrow: 1,
           marginTop: '80px',
           paddingX: {
-            xs: 4, // 모바일에서 16px (2 * 8px)
-            sm: 6, // 작은 화면에서 32px
+            xs: 1, // 모바일에서 16px (2 * 8px)
+            sm: 2, // 작은 화면에서 32px
             md: 8, // 중간 화면에서 64px
             lg: 12, // 큰 화면에서 96px
           },
           paddingY: {
-            xs: 2, // 모바일에서 16px
-            sm: 3, // 작은 화면에서 24px
+            xs: 1, // 모바일에서 16px
+            sm: 2, // 작은 화면에서 24px
             md: 4, // 중간 화면에서 32px
             lg: 5, // 큰 화면에서 40px
           },

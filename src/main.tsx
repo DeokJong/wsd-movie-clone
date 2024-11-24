@@ -1,12 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
-import { CssBaseline, ThemeProvider } from '@mui/material'
+import { CssBaseline } from '@mui/material'
 import { Provider as JotaiProvider } from 'jotai'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import { routeTree } from './routeTree.gen'
 import { useTheme } from './hooks/custom/useTheme'
+import ThemeTransition from './ThemeTransition'
 
 const router = createRouter({ routeTree })
 
@@ -21,10 +22,10 @@ const queryClient = new QueryClient()
 const App = () => {
   const { theme } = useTheme()
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeTransition theme={theme}>
       <CssBaseline />
       <RouterProvider router={router} />
-    </ThemeProvider>
+    </ThemeTransition>
   )
 }
 
