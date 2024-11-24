@@ -1,7 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="refresh" content="0; url=/wsd-movie-clone/" />
+    <script type="text/javascript">
+      // 현재 URL 경로를 가져옵니다.
+      const currentPath = window.location.pathname;
+
+      // SPA의 루트 경로로 리다이렉트합니다.
+      const basePath = "/wsd-movie-clone/";
+
+      // 현재 경로가 루트 경로에 포함되어 있지 않으면 리다이렉트
+      if (!currentPath.startsWith(basePath)) {
+        // 현재 경로를 유지하면서 루트 경로로 이동
+        const newPath = basePath + currentPath.slice(1);
+        window.location.replace(newPath);
+      }
+    </script>
   </head>
   <body>
     <p>Redirecting...</p>
