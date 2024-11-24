@@ -6,25 +6,6 @@
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="WSD Movie Clone"/>
     <title>WSD Movie Clone</title>
-    <script type="text/javascript">
-      (function (l) {
-        if (l.search) {
-          var q = {};
-          l.search.slice(1).split('&').forEach(function (v) {
-            var a = v.split('=');
-            q[a[0]] = a.slice(1).join('=').replace(/~and~/g, '&');
-          });
-          if (q.p !== undefined) {
-            var startPosition = 'https://deokjong.github.io/wsd-movie-clone/';
-            window.history.replaceState(null, null,
-              startPosition + (q.p || '') +
-              (q.q ? ('?' + q.q) : '') +
-              l.hash
-            );
-          }
-        }
-      }(window.location))
-    </script>
   </head>
   <body>
     <div id="root"></div>
