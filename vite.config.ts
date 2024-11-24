@@ -5,6 +5,7 @@ import eslint from 'vite-plugin-eslint'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
+  base: '',
   build: {
     outDir: './dist'
   },
