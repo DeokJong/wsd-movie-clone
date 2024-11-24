@@ -3,6 +3,6 @@ export type PopularQuery = {
   page?: number
 }
 
-export type TDataPopular = {
+export type TDataPopularPeople = {
   query?: PopularQuery
 }
