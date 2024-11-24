@@ -5,5 +5,9 @@ import eslint from 'vite-plugin-eslint'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
+  base: '/wsd-movie-clone/',
+  build: {
+    outDir: './dist'
+  },
   plugins: [TanStackRouterVite(), viteReact(), eslint(), tsconfigPaths()],
 })
