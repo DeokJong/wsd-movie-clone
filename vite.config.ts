@@ -5,7 +5,7 @@ import eslint from 'vite-plugin-eslint'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
-  base: '/wsd-movie-clone/',
+  base: 'https://deokjong.github.io/wsd-movie-clone/',
   build: {
     outDir: './dist'
   },

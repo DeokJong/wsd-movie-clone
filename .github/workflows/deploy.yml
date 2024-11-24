@@ -8,7 +8,7 @@ on:
 jobs:
   # Stage 1: Build React app
   build:
-    name: Build Vite React App
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: checkout Github Action
