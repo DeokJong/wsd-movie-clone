@@ -2,7 +2,7 @@ name: Deploy React app to GitHub Pages with Environment Variables
 
 on:
   push:
-    branches: ["feature/CI-CD"]
+    branches: ["main"]
   workflow_dispatch:
 
 jobs:
