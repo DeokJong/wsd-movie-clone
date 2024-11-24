@@ -20,8 +20,8 @@ export const usePopularMovies = () => {
     },
   })
 
-  const handleLoadMore = () => {
-    fetchNextPage()
+  const handleLoadMore = async () => {
+    await fetchNextPage()
     console.log('fetchNextPage')
   }
 

@@ -1,3 +1,5 @@
 export * from './useTheme'
 export * from './useAuth'
 export * from './useUserData'
+export * from './useWishData'
+export * from './useSearch'

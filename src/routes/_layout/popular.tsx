@@ -26,9 +26,9 @@ function Popular() {
     handleLoadMore: appendTVShows,
   } = usePopularTV()
 
-  // sentinelRef 대신 sentinelElement 상태를 사용
   const [sentinelElement, setSentinelElement] = useState<HTMLDivElement | null>(null)
   const observer = useRef<IntersectionObserver | null>(null)
+  const [isLoadingMore, setIsLoadingMore] = useState(false)
 
   const handleMediaTypeChange = (
     _: React.MouseEvent<HTMLElement>,
@@ -41,9 +41,11 @@ function Popular() {
 
   const loadMore = useCallback(() => {
     if (mediaType === 'movie' && !movieLoading) {
-      appendMovies()
+      setIsLoadingMore(true)
+      appendMovies().finally(() => setIsLoadingMore(false))
     } else if (mediaType === 'tv' && !tvLoading) {
-      appendTVShows()
+      setIsLoadingMore(true)
+      appendTVShows().finally(() => setIsLoadingMore(false))
     }
   }, [mediaType, movieLoading, tvLoading, appendMovies, appendTVShows])
 
@@ -227,11 +229,17 @@ function Popular() {
           </Box>
 
           {/* 로딩 스피너 */}
-          {(mediaType === 'movie' && movieLoading) || (mediaType === 'tv' && tvLoading)
-            ? <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+          {isLoadingMore && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.3 }}
+              style={{ display: 'flex', justifyContent: 'center', marginTop: 16 }}
+            >
               <CircularProgress />
-            </Box>
-            : null}
+            </motion.div>
+          )}
 
           {/* Intersection Observer를 위한 sentinel */}
           <div ref={setSentinelElement} />

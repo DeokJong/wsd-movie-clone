@@ -96,3 +96,15 @@ type TVShowDetail = CommonFields & {
 }
 
 export type PublicFeatureDetail = MovieDetail | TVShowDetail
+
+type Keyword = {
+  id: number
+  name: string
+}
+
+export type PublicSearch = {
+  page: number
+  results: FeatureResults[] | Keyword[]
+  total_pages: number
+  total_results: number
+}

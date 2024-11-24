@@ -110,12 +110,12 @@ function Detail() {
             {/* Bookmark */}
             {isInWishList
               ? <Fade in={true} timeout={500}>
-                <IconButton onClick={() => removeWishList(detail.id)} sx={detailStyles.bookmarkButton}>
+                <IconButton onClick={() => removeWishList(detail.id)} sx={detailStyles.bookmarkRemoveButton}>
                   <BookmarkRemoveIcon />
                 </IconButton>
               </Fade>
               : <Fade in={true} timeout={500}>
-                <IconButton onClick={() => appendWishList(detail.id, mediaType)} sx={detailStyles.bookmarkButton}>
+                <IconButton onClick={() => appendWishList(detail.id, mediaType)} sx={detailStyles.bookmarkAddButton}>
                   <BookmarkAddIcon />
                 </IconButton>
               </Fade>
