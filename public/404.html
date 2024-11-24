@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="refresh" content="0; url=/" />
-    <script>
-      // Redirect to the basepath to handle SPA routing
-      var pathname = window.location.pathname;
-      var basepath = '/wsd-movie-clone';
-      var newUrl = basepath + (pathname.startsWith(basepath) ? pathname.slice(basepath.length) : pathname);
-      window.location.replace(newUrl);
+<head>
+    <meta charset="utf-8">
+    <title>Single Page Apps for GitHub Pages</title>
+    <script type="text/javascript">
+        var segmentCount = 1;
+
+        var l = window.location;
+        l.replace(
+            l.protocol + '//' + l.hostname + (l.port ?   ':' + l.port : '') +
+            l.pathname.split('/').slice(0, 1 +  segmentCount).join('/') + '/?p=/' +
+            l.pathname.slice(1).split('/').slice  (segmentCount).join('/').replace(/&/g,  '~and~') +
+            (l.search ? '&q=' + l.search.slice(1) .replace(/&/g, '~and~') : '') +
+            l.hash
+        );
+
     </script>
-  </head>
-  <body></body>
+</head>
+<body>
+</body>
 </html>
