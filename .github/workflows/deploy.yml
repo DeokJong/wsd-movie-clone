@@ -74,13 +74,12 @@ jobs:
       - name: Debug Artifact
         run: |
           echo "Current Directory: $(pwd)"
-          cd ..
-          ls -la ./dist
+          ls -la ${{ github.workspace }}/dist
 
       - name: Upload artifact to GitHub Pages
         uses: actions/upload-pages-artifact@v2
         with:
-          path: ./dist
+          path: ${{ github.workspace }}/dist
 
       - name: Deploy to GitHub Pages
         id: deployment
