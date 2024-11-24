@@ -49,13 +49,12 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          name: vite-react-build
           path: ./dist
 
   # Stage 2: Deploy to GitHub Pages
   deploy:
     name: Deploy to GitHub Pages
-    needs: [build]
+    needs: build
     permissions:
       pages: write
       id-token: write
@@ -64,11 +63,6 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Download build artifact
-        uses: actions/download-pages-artifact@v3
-        with:
-          name: vite-react-build
-
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v3
+        uses: actions/deploy-pages@v4
