@@ -47,7 +47,10 @@ jobs:
         run: npm run build
 
       - name: Debug Build Directory
-        run: ls -la ./dist # dist 디렉토리가 생성되었는지 확인
+        run: |
+          echo "Current Directory: $(pwd)"
+          echo "Workspace Directory: ${{ github.workspace }}"
+          ls -la ./dist # dist 디렉토리가 생성되었는지 확인
 
       - name: Upload build artifact
         if: success() # 빌드가 성공적으로 완료된 경우에만 실행
@@ -68,7 +71,9 @@ jobs:
           name: vite-react-build
 
       - name: Debug Artifact
-        run: ls -la ./dist # 다운로드된 파일 확인
+        run: |
+          echo "Current Directory: $(pwd)"
+          ls -la ./dist # 다운로드된 파일 확인
 
       - name: Upload artifact to GitHub Pages
         uses: actions/upload-pages-artifact@v2
