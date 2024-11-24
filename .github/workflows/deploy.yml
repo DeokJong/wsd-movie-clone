@@ -77,7 +77,7 @@ jobs:
           cd .. 
           cd ..
           echo "Current Directory: $(pwd)"
-          ls -la
+          ls -rl
 
       - name: Upload artifact to GitHub Pages
         uses: actions/upload-pages-artifact@v2
