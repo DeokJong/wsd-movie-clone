@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <title>Redirecting...</title>
     <script>
-      // 현재 경로를 정확히 파악하고 index.html로 리다이렉트
-      const redirectPath = window.location.pathname.replace('/wsd-movie-clone', '') + window.location.search + window.location.hash;
-      // GitHub Pages에서 index.html로 리다이렉트하도록 설정
-      const redirectUrl = '/wsd-movie-clone' + redirectPath;
-      window.location.replace(redirectUrl);
+      // 현재 경로를 가져와서 index.html로 리다이렉트하면서 경로를 쿼리 매개변수로 전달
+      const redirectTo = window.location.pathname.replace('/wsd-movie-clone/', '') + window.location.search;
+      window.location.replace('/wsd-movie-clone/redirect=' + encodeURIComponent(redirectTo));
     </script>
   </head>
   <body>
