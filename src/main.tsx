@@ -25,11 +25,12 @@ declare module '@tanstack/react-router' {
 const handleRedirect = () => {
   const params = new URLSearchParams(window.location.search)
   const redirectPath = params.get('redirect')
-  console.log('Current path:', window.location.pathname)
   console.log('redirectPath:', redirectPath)
-  if (redirectPath && redirectPath.startsWith('index.html/')) {
-    const newPath = redirectPath.replace('index.html/', '')
-    router.navigate({ to: newPath }) // 라우터로 리다이렉트
+  if (redirectPath) {
+    router.navigate({
+      to: redirectPath,
+      replace: true,
+    })
   }
 }
 
