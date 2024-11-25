@@ -6,6 +6,7 @@
     <script>
       // 현재 경로를 가져와서 index.html로 리다이렉트하면서 경로를 쿼리 매개변수로 전달
       const redirectTo = window.location.pathname.replace('/wsd-movie-clone/', '') + window.location.search;
+      console.log(redirectTo);
       window.location.replace('/wsd-movie-clone/index.html?redirect=' + encodeURIComponent(redirectTo));
     </script>
   </head>
