@@ -11,22 +11,13 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: checkout Github Action
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
-
-      - name: Cache node_modules
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
 
       - name: Configure Environment Variables
         env:
@@ -67,12 +58,15 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-  # Stage 3: Post-caching (Optional, parallel execution)
+  # Stage 3: Post-cache (Runs in parallel with Deploy)
   post-cache:
-    name: Post Caching
-    needs: build
+    name: Post-cache node_modules
+    needs: build  # Only depends on build
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Post-cache node_modules
         id: post-cache
         uses: actions/cache@v3
