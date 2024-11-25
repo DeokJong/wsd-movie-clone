@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
     <title>Redirecting...</title>
     <script>
-      // SPA 라우팅을 위해 404.html에서 index.html로 리다이렉트
-      const pathname = window.location.pathname.replace('/wsd-movie-clone', '');
-      const search = window.location.search;
-      const hash = window.location.hash;
-      window.location.replace(`/wsd-movie-clone/index.html?redirect=${pathname}${search}${hash}`);
+      // 현재 경로를 가져와서 index.html로 리다이렉트하면서 경로를 쿼리 매개변수로 전달
+      const redirectTo = window.location.pathname.replace('/wsd-movie-clone/', '') + window.location.search;
+      window.location.replace('/wsd-movie-clone/index.html?redirect=' + encodeURIComponent(redirectTo));
     </script>
   </head>
-  <body></body>
+  <body>
+    Redirecting...
+  </body>
 </html>

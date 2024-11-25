@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { CssBaseline } from '@mui/material'
@@ -9,7 +9,11 @@ import { routeTree } from './routeTree.gen'
 import { useTheme } from './hooks/custom/useTheme'
 import ThemeTransition from './ThemeTransition'
 
-const router = createRouter({ routeTree, basepath: '/wsd-movie-clone/' })
+// 라우터 생성
+const router = createRouter({
+  routeTree,
+  basepath: '/wsd-movie-clone/', // Vite와 GitHub Pages 설정에 맞춘 basepath
+})
 
 declare module '@tanstack/react-router' {
   interface Register {
@@ -17,14 +21,29 @@ declare module '@tanstack/react-router' {
   }
 }
 
+// 리다이렉트 처리 함수
+const handleRedirect = () => {
+  const params = new URLSearchParams(window.location.search)
+  const redirectPath = params.get('redirect')
+  if (redirectPath) {
+    router.navigate({ to: redirectPath }) // 라우터로 리다이렉트
+  }
+}
+
 const queryClient = new QueryClient()
 
 const App = () => {
   const { theme } = useTheme()
+
+  // 컴포넌트가 마운트될 때 리다이렉트 처리
+  useEffect(() => {
+    handleRedirect()
+  }, [])
+
   return (
     <ThemeTransition theme={theme}>
       <CssBaseline />
-      <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </ThemeTransition>
   )
 }
