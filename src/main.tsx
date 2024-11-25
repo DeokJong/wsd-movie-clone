@@ -9,7 +9,7 @@ import { routeTree } from './routeTree.gen'
 import { useTheme } from './hooks/custom/useTheme'
 import ThemeTransition from './ThemeTransition'
 
-const router = createRouter({ routeTree, basepath: 'https://deokjong.github.io/wsd-movie-clone/' })
+const router = createRouter({ routeTree, basepath: '/deokjong.github.io/wsd-movie-clone/' })
 
 declare module '@tanstack/react-router' {
   interface Register {

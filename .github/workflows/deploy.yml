@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  # Stage 1: Build React app
+  # Stage 1: Build React app with caching
   build:
     name: Build
     runs-on: ubuntu-latest
@@ -18,6 +18,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20'
+
+      - name: Restore node_modules cache
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Configure Environment Variables
         env:
@@ -58,16 +67,16 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-  # Stage 3: Post-cache (Runs in parallel with Deploy)
+  # Stage 3: Update cache post-build (Runs in parallel with Deploy)
   post-cache:
-    name: Post-cache node_modules
-    needs: build  # Only depends on build
+    name: Update Cache
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Post-cache node_modules
+      - name: Save node_modules to cache
         id: post-cache
         uses: actions/cache@v3
         with:
