@@ -66,3 +66,18 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  # Stage 3: Post-caching (Optional, parallel execution)
+  post-cache:
+    name: Post Caching
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post-cache node_modules
+        id: post-cache
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
