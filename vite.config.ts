@@ -18,8 +18,8 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: '404.html', // 프로젝트 루트에 위치한 404.html
-          dest: '.', // 빌드 디렉토리로 복사
+          src: './public/404.html',
+          dest: '.',
         },
       ],
     }),
