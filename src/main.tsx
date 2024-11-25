@@ -29,7 +29,7 @@ const handleRedirect = () => {
   console.log('redirectPath:', redirectPath)
   if (redirectPath && redirectPath.startsWith('index.html/')) {
     const newPath = redirectPath.replace('index.html/', '')
-    router.navigate({ to: `../${newPath}` }) // 라우터로 리다이렉트
+    router.navigate({ to: newPath }) // 라우터로 리다이렉트
   }
 }
 
