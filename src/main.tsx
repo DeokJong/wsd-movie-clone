@@ -12,7 +12,6 @@ import ThemeTransition from './ThemeTransition'
 // 라우터 생성
 const router = createRouter({
   routeTree,
-  basepath: '/wsd-movie-clone/', // Vite와 GitHub Pages 설정에 맞춘 basepath
 })
 
 declare module '@tanstack/react-router' {

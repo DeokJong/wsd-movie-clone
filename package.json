@@ -29,7 +29,8 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.2",
     "react-toggle-dark-mode": "^1.1.1",
-    "vite-plugin-eslint": "^1.8.1"
+    "vite-plugin-eslint": "^1.8.1",
+    "vite-project": "file:"
   },
   "devDependencies": {
     "@tanstack/router-devtools": "^1.47.5",
@@ -46,7 +47,6 @@
     "standard": "^17.1.0",
     "typescript": "^5.5.4",
     "vite": "^5.4.0",
-    "vite-plugin-static-copy": "^2.1.0",
     "vite-tsconfig-paths": "^5.0.1"
   }
 }
