@@ -74,7 +74,7 @@ export const HorizontalScrollContainer: React.FC<HorizontalScrollContainerProps>
     <HorizontalScrollPaper ref={scrollRef}>
       {React.Children.map(children, (child, index) => (
         <Grow in={!isLoading} timeout={1000}>
-          <Box ref={index === 0 ? childRef : null}>{child}</Box>
+          <Box ref={index === 0 ? childRef : null} sx={{ margin: 1 }}>{child}</Box>
         </Grow>
       ))}
     </HorizontalScrollPaper>

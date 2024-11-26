@@ -4,6 +4,7 @@ export const HorizontalScrollPaper = styled(Paper)({
   display: 'flex',
   overflowX: 'auto',
   flexShrink: 0,
+
   background: 'transparent',
   '&::-webkit-scrollbar': {
     width: '4px',
