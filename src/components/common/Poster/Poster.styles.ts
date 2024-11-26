@@ -4,7 +4,6 @@ import { Box, Card, Typography } from '@mui/material'
 export const PosterCard = styled(Card)(({ theme }) => ({
   background: theme.palette.TypographyBackground.primary,
   width: 200,
-  margin: theme.spacing(2),
   position: 'relative',
   overflow: 'hidden',
   borderRadius: theme.shape.borderRadius * 2,
@@ -17,7 +16,6 @@ export const PosterCard = styled(Card)(({ theme }) => ({
   },
   [theme.breakpoints.down('sm')]: {
     width: 100,
-    margin: theme.spacing(0.5),
     '&:hover': {
       transform: 'none',
     },
