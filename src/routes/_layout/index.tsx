@@ -39,6 +39,13 @@ function index() {
     setCurrentPage(page)
   }
 
+  if (isDiscoverMoviesLoading || isDiscoverTVLoading) {
+    return <div>Loading...</div>
+  }
+
+  console.log(discoverMovies)
+  console.log(discoverTV)
+
   return (
     <>
       <Fade in={!!paginatedMovie} timeout={500}>
@@ -80,26 +87,26 @@ function index() {
             <Poster
               key={data.id}
               data={{
-                ...data,
+                id: data.id,
                 image_path: data.poster_path || '',
                 title: data.title || data.name || '',
-                media_type: data.media_type || '',
+                media_type: 'title' in data ? 'movie' : 'tv',
               }}
               error={discoverMoviesError}
             />
           ))}
       </HorizontalScrollContainer>
-      <h1>Trending TV SHOW</h1>
+      <h1>Discover TV SHOW</h1>
       <HorizontalScrollContainer isLoading={isDiscoverTVLoading}>
         {!isDiscoverTVLoading &&
           discoverTV?.map((data) => (
             <Poster
               key={data.id}
               data={{
-                ...data,
+                id: data.id,
                 image_path: data.poster_path || '',
                 title: data.title || data.name || '',
-                media_type: data.media_type || '',
+                media_type: 'title' in data ? 'movie' : 'tv',
               }}
               error={discoverTVError}
             />
