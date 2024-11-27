@@ -12,6 +12,10 @@ export class TrendingService {
   }): CancelablePromise<PublicFeature> {
     return request(OpenAPIMovieDB, {
       ...data,
+      query: {
+        ...data?.query,
+        language: 'ko',
+      },
       method: 'GET',
       url: '/trending/all/{time_window}',
       mediaType: 'application/json',
@@ -23,6 +27,10 @@ export class TrendingService {
   ): CancelablePromise<PublicFeature> {
     return request(OpenAPIMovieDB, {
       ...data,
+      query: {
+        ...data?.query,
+        language: 'ko',
+      },
       method: 'GET',
       url: '/trending/movie/{time_window}',
       mediaType: 'application/json',
@@ -36,6 +44,10 @@ export class TrendingService {
   }): CancelablePromise<PublicFeature> {
     return request(OpenAPIMovieDB, {
       ...data,
+      query: {
+        ...data?.query,
+        language: 'ko',
+      },
       method: 'GET',
       url: '/trending/person/{time_window}',
       mediaType: 'application/json',
@@ -49,6 +61,10 @@ export class TrendingService {
   }): CancelablePromise<PublicFeature> {
     return request(OpenAPIMovieDB, {
       ...data,
+      query: {
+        ...data?.query,
+        language: 'ko',
+      },
       method: 'GET',
       url: '/trending/tv/{time_window}',
       mediaType: 'application/json',

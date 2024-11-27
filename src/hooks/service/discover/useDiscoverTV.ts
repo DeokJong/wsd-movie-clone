@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 
+import { isAuth } from '../../custom'
+
 import { DiscoverService, FeatureResults } from '@/Services'
 
 export const useDiscoverTV = () => {
@@ -16,6 +18,7 @@ export const useDiscoverTV = () => {
           },
         })
       ).results,
+    enabled: isAuth(),
   })
 
   const handlePageChange = (page: number) => {

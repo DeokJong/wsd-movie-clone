@@ -1,10 +1,10 @@
+import { toast } from 'react-toastify'
 import {
   Typography,
   CircularProgress,
   Box,
   ToggleButton,
   ToggleButtonGroup,
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -12,17 +12,25 @@ import {
   TableHead,
   TableRow,
   TablePagination,
+  Button,
 } from '@mui/material'
 import { useEffect, useState, useRef, useCallback } from 'react'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate, redirect } from '@tanstack/react-router'
 import { motion, AnimatePresence } from 'framer-motion'
 import { GridView, Movie, Tv, ViewList } from '@mui/icons-material'
 
-import { usePopularMovies, usePopularTV } from '@/Hooks'
+import { isAuth, usePopularMovies, usePopularTV } from '@/Hooks'
 import { Poster } from '@/Components'
+import { getImageURI } from '@/Utils'
 
 export const Route = createFileRoute('/_layout/popular')({
   component: Popular,
+  beforeLoad: () => {
+    if (!isAuth()) {
+      toast.info('You must be logged in to view the application')
+      throw redirect({ to: '/signin' })
+    }
+  },
 })
 
 function Popular() {
@@ -46,6 +54,7 @@ function Popular() {
   const [isLoadingMore, setIsLoadingMore] = useState(false)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
+  const navigate = useNavigate()
 
   const handleMediaTypeChange = (
     _: React.MouseEvent<HTMLElement>,
@@ -120,14 +129,14 @@ function Popular() {
       <Box
         sx={{
           display: 'flex',
-          justifyContent: 'center',
           position: 'absolute',
+          width: { xs: '100%', sm: '50%' },
           top: { xs: 60, sm: 90 },
-          left: 0,
-          right: 0,
-          zIndex: 2000,
-          flexDirection: { xs: 'column', sm: 'row' },
-          alignItems: 'center',
+          zIndex: 1100,
+          flexDirection: 'column',
+          justifyContent: 'center',
+          left: '50%',
+          transform: 'translateX(-50%)',
         }}
       >
         <ToggleButtonGroup
@@ -136,10 +145,10 @@ function Popular() {
           onChange={handleMediaTypeChange}
           aria-label="media type"
           sx={{
+            width: '100%',
             '& .MuiToggleButton-root': {
               border: '1px solid rgba(255, 255, 255, 0.12)',
               color: (theme) => theme.palette.TypographyColor.primary,
-              padding: '8px 24px',
               '&.Mui-selected': {
                 backgroundColor: (theme) => theme.palette.TypographyBackground.primary,
                 color: 'white',
@@ -157,6 +166,7 @@ function Popular() {
             value="movie"
             aria-label="movie"
             sx={{
+              width: { xs: '50%', sm: '50%' },
               '&.Mui-selected': (theme) => ({
                 backgroundColor: theme.palette.TypographyBackground.primary,
                 color: theme.palette.TypographyColor.primary,
@@ -173,6 +183,7 @@ function Popular() {
             value="tv"
             aria-label="tv"
             sx={{
+              width: { xs: '50%', sm: '50%' },
               '&.Mui-selected': (theme) => ({
                 backgroundColor: theme.palette.TypographyBackground.primary,
                 color: theme.palette.TypographyColor.primary,
@@ -183,7 +194,7 @@ function Popular() {
             }}
           >
             <Tv sx={{ mr: 1 }} />
-            인기 TV 프로그램
+            인기 TV
           </ToggleButton>
         </ToggleButtonGroup>
 
@@ -193,10 +204,10 @@ function Popular() {
           onChange={handleViewTypeChange}
           aria-label="view type"
           sx={{
+            width: '100%',
             '& .MuiToggleButton-root': {
               border: '1px solid rgba(255, 255, 255, 0.12)',
               color: (theme) => theme.palette.TypographyColor.primary,
-              padding: '8px 24px',
               '&.Mui-selected': {
                 backgroundColor: (theme) => theme.palette.TypographyBackground.primary,
                 color: 'white',
@@ -210,11 +221,37 @@ function Popular() {
             },
           }}
         >
-          <ToggleButton value="grid" aria-label="grid view">
+          <ToggleButton
+            value="grid"
+            aria-label="grid"
+            sx={{
+              width: { xs: '50%', sm: '50%' },
+              '&.Mui-selected': (theme) => ({
+                backgroundColor: theme.palette.TypographyBackground.primary,
+                color: theme.palette.TypographyColor.primary,
+                '&:hover': {
+                  backgroundColor: theme.palette.TypographyBackground.primary,
+                },
+              }),
+            }}
+          >
             <GridView sx={{ mr: 1 }} />
             그리드 보기
           </ToggleButton>
-          <ToggleButton value="table" aria-label="table view">
+          <ToggleButton
+            value="table"
+            aria-label="table"
+            sx={{
+              width: { xs: '50%', sm: '50%' },
+              '&.Mui-selected': (theme) => ({
+                backgroundColor: theme.palette.TypographyBackground.primary,
+                color: theme.palette.TypographyColor.primary,
+                '&:hover': {
+                  backgroundColor: theme.palette.TypographyBackground.primary,
+                },
+              }),
+            }}
+          >
             <ViewList sx={{ mr: 1 }} />
             테이블 보기
           </ToggleButton>
@@ -232,10 +269,11 @@ function Popular() {
           {viewType === 'grid'
             ? <Box
               sx={{
-                marginTop: { xs: 15, sm: 5 },
+                marginTop: { xs: 15, sm: 12 },
                 display: 'flex',
                 flexWrap: 'wrap',
-                gap: 2,
+                justifyContent: 'center',
+                gap: 1
               }}
             >
               {mediaType === 'movie'
@@ -297,8 +335,15 @@ function Popular() {
                 ))
               }
             </Box>
-            : <TableContainer component={Paper} sx={{ marginTop: { xs: 15, sm: 5 } }}>
-              <Table>
+            : <TableContainer
+              component={Box}
+              sx={{
+                marginTop: { xs: 15, sm: 12 },
+                backgroundColor: 'transparent',
+                overflowX: 'hidden',
+              }}
+            >
+              <Table sx={{ width: '100%', margin: '0 auto' }}>
                 <TableHead>
                   <TableRow>
                     <TableCell>포스터</TableCell>
@@ -316,10 +361,15 @@ function Popular() {
                   )?.map((item) => (
                     <TableRow key={item.id}>
                       <TableCell>
-                        <img
-                          src={`https://image.tmdb.org/t/p/w92${item.poster_path}`}
+                        <Box
+                          component="img"
+                          src={getImageURI(item?.poster_path || '', 'w92')}
                           alt={mediaType === 'movie' ? item.title : item.name}
                           style={{ width: 50, height: 75, objectFit: 'cover' }}
+                          onClick={() => navigate({
+                            to: '/detail/$id/$media_type',
+                            params: { id: String(item.id), media_type: mediaType }
+                          })}
                         />
                       </TableCell>
                       <TableCell>{mediaType === 'movie' ? item.title : item.name}</TableCell>
@@ -331,15 +381,30 @@ function Popular() {
                   ))}
                 </TableBody>
               </Table>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={mediaType === 'movie' ? movies?.length || 0 : tvShows?.length || 0}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25]}
+                  component="div"
+                  count={mediaType === 'movie' ? movies?.length || 0 : tvShows?.length || 0}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  sx={{
+                    width: '100%',
+                    margin: '0 !important',
+                  }}
+                />
+              </Box>
+              <Button
+                onClick={loadMore}
+                sx={{
+                  color: (theme) => theme.palette.TypographyColor.primary,
+                  backgroundColor: (theme) => theme.palette.TypographyBackground.primary,
+                  marginLeft: 'auto',
+                }}
+              >더 불러오기
+              </Button>
             </TableContainer>
           }
 

@@ -8,6 +8,10 @@ export class PopularService {
   public static TV(data: TDataPopular = {}): CancelablePromise<PublicFeature> {
     return request(OpenAPIMovieDB, {
       ...data,
+      query: {
+        ...data?.query,
+        language: 'ko',
+      },
       method: 'GET',
       url: '/tv/popular',
       mediaType: 'application/json',
@@ -17,6 +21,10 @@ export class PopularService {
   public static Movies(data: TDataPopular = {}): CancelablePromise<PublicFeature> {
     return request(OpenAPIMovieDB, {
       ...data,
+      query: {
+        ...data?.query,
+        language: 'ko',
+      },
       method: 'GET',
       url: '/movie/popular',
       mediaType: 'application/json',

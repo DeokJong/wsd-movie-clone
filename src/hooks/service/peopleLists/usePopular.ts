@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 
+import { isAuth } from '../../custom'
+
 import { PeopleListsService, FeatureResults } from '@/Services'
 
 export const usePopular = () => {
@@ -16,6 +18,7 @@ export const usePopular = () => {
           },
         })
       ).results,
+    enabled: isAuth(),
   })
 
   const handlePageChange = (page: number) => {

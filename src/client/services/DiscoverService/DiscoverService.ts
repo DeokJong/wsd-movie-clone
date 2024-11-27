@@ -8,6 +8,10 @@ export class DiscoverService {
   public static Movie(data?: TDataMovie): CancelablePromise<PublicFeature> {
     return request(OpenAPIMovieDB, {
       ...data,
+      query: {
+        ...data?.query,
+        language: 'ko',
+      },
       method: 'GET',
       url: '/discover/movie',
       mediaType: 'application/json',
@@ -17,6 +21,10 @@ export class DiscoverService {
   public static TV(data?: TDataTV): CancelablePromise<PublicFeature> {
     return request(OpenAPIMovieDB, {
       ...data,
+      query: {
+        ...data?.query,
+        language: 'ko',
+      },
       method: 'GET',
       url: '/discover/tv',
       mediaType: 'application/json',

@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify'
 import { Box, CircularProgress } from '@mui/material'
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import { motion } from 'framer-motion'
@@ -9,7 +10,7 @@ export const Route = createFileRoute('/_layout/wishlist')({
   component: WishList,
   beforeLoad: () => {
     if (!isAuth()) {
-      alert('You must be logged in to view the wishlist.')
+      toast.info('You must be logged in to view the application')
       throw redirect({ to: '/signin' })
     }
   },
