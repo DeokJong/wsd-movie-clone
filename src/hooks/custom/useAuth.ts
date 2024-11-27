@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { atom, useAtom } from 'jotai'
 
-import { BcryptEncoder } from '@/Utils'
 import { errors } from '@/Constant'
 
 export type TDataLogin = {
@@ -44,6 +43,11 @@ export const isAuth = (): boolean => {
   return isRememberMe() ? !!localStorage.getItem('email') : !!sessionStorage.getItem('email')
 }
 
+export const getPassword = () => {
+  const email = sessionStorage.getItem('email') || localStorage.getItem('email')
+  return localStorage.getItem(`user:${email}:password`)
+}
+
 const loginAtom = atom<boolean>(false)
 const emailAtom = atom<string | null>(null)
 
@@ -74,7 +78,11 @@ export const useAuth = () => {
       throw new AuthError(409, 'Email already exists')
     }
 
-    localStorage.setItem(`user:${email}:password`, BcryptEncoder.hash(password))
+    if (email.length === 0 || password.length === 0 || fullName.length === 0) {
+      throw new AuthError(400, 'Email, password, and full name are required')
+    }
+
+    localStorage.setItem(`user:${email}:password`, password)
     localStorage.setItem(`user:${email}:fullName`, fullName)
   }
 
@@ -82,7 +90,7 @@ export const useAuth = () => {
     const storedPassword = localStorage.getItem(`user:${email}:password`)
     if (!storedPassword) {
       throw new AuthError(404, 'User not found')
-    } else if (!BcryptEncoder.compare(rawPassword, storedPassword)) {
+    } else if (rawPassword !== storedPassword) {
       throw new AuthError(401, 'Invalid password')
     }
 

@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 
+import { isAuth } from '../../custom'
+
 import { TrendingService, FeatureResults } from '@/Services'
 
 export const useTrendingMovies = () => {
@@ -16,6 +18,7 @@ export const useTrendingMovies = () => {
           }
         })
       ).results,
+    enabled: isAuth(),
   })
 
   const handlePageChange = (timeWindow: 'day' | 'week') => {
