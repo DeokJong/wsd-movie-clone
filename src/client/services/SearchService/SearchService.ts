@@ -11,6 +11,10 @@ export class SearchService {
       url: '/search/movie',
       mediaType: 'application/json',
       ...data,
+      query: {
+        ...data?.query,
+        language: 'ko',
+      },
     })
   }
 
@@ -20,6 +24,10 @@ export class SearchService {
       url: '/search/tv',
       mediaType: 'application/json',
       ...data,
+      query: {
+        ...data?.query,
+        language: 'ko',
+      },
     })
   }
 
@@ -29,6 +37,10 @@ export class SearchService {
       url: '/search/keyword',
       mediaType: 'application/json',
       ...data,
+      query: {
+        ...data?.query,
+        language: 'ko',
+      },
     })
   }
 }

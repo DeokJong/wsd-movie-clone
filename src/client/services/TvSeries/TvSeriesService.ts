@@ -8,6 +8,10 @@ export class TvSeriesService {
   public static Details(data: TDataTvSeriesDetails): CancelablePromise<PublicFeatureDetail> {
     return request(OpenAPIMovieDB, {
       ...data,
+      query: {
+        ...data?.query,
+        language: 'ko',
+      },
       method: 'GET',
       url: '/tv/{series_id}',
       mediaType: 'application/json',
