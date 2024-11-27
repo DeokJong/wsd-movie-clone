@@ -1,5 +1,7 @@
 import { OpenAPIConfig, Interceptors } from './OpenAPI'
 
+import { getPassword } from '@/Hooks'
+
 export const createOpenAPIConfig = (baseUrl: string): OpenAPIConfig => ({
   BASE: baseUrl,
   CREDENTIALS: 'include',
@@ -7,7 +9,7 @@ export const createOpenAPIConfig = (baseUrl: string): OpenAPIConfig => ({
   HEADERS: undefined,
   PASSWORD: undefined,
   RESULT: 'body',
-  TOKEN: async () => { return import.meta.env.VITE_ACCESS_TOKEN },
+  TOKEN: getPassword() || undefined,
   USERNAME: undefined,
   VERSION: '0.1.0',
   WITH_CREDENTIALS: false,
