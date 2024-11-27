@@ -1,32 +1,39 @@
 import { useMemo, useState } from 'react'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import { Fade, Pagination, Stack } from '@mui/material'
+import { toast } from 'react-toastify'
 
 import { Poster, HorizontalScrollContainer, Banner } from '@/Components'
-import { useTrendingMovies, useTrendingTV } from '@/Hooks'
+import { isAuth, useDiscoverMovie, useDiscoverTV } from '@/Hooks'
 
 export const Route = createFileRoute('/_layout/')({
   component: index,
+  beforeLoad: () => {
+    if (!isAuth()) {
+      toast.info('You must be logged in to view the application')
+      throw redirect({ to: '/signin' })
+    }
+  },
 })
 
 function index() {
   const {
-    data: trendingMovies,
-    error: trendingMoviesError,
-    isLoading: isTrendingMoviesLoading,
-  } = useTrendingMovies()
+    data: discoverMovies,
+    error: discoverMoviesError,
+    isLoading: isDiscoverMoviesLoading,
+  } = useDiscoverMovie()
   const {
-    data: trendingTV,
-    error: trendingTVError,
-    isLoading: isTrendingTVLoading,
-  } = useTrendingTV()
+    data: discoverTV,
+    error: discoverTVError,
+    isLoading: isDiscoverTVLoading,
+  } = useDiscoverTV()
 
   const [currentPage, setCurrentPage] = useState(1)
 
   const paginatedMovie = useMemo(() => {
-    if (!trendingMovies?.length) return null
-    return trendingMovies[currentPage - 1] || null
-  }, [trendingMovies, currentPage])
+    if (!discoverMovies?.length) return null
+    return discoverMovies[currentPage - 1] || null
+  }, [discoverMovies, currentPage])
 
   const handlePageChange = (_: React.ChangeEvent<unknown>, page: number) => {
     setCurrentPage(page)
@@ -50,11 +57,11 @@ function index() {
       </Fade>
       <Stack spacing={2} alignItems="center" sx={{ my: 2 }}>
         <Pagination
-          count={trendingMovies?.length ?? 0}
+          count={discoverMovies?.length ?? 0}
           page={currentPage}
           onChange={handlePageChange}
           color="primary"
-          size="large"
+          size={window.innerWidth < 600 ? 'medium' : 'large'}
           sx={(theme) => ({
             '& .MuiPaginationItem-root': {
               color: theme.palette.TypographyColor.primary,
@@ -67,9 +74,9 @@ function index() {
       </Stack>
 
       <h1>Discover Movie</h1>
-      <HorizontalScrollContainer isLoading={isTrendingMoviesLoading}>
-        {!isTrendingMoviesLoading &&
-          trendingMovies?.map((data) => (
+      <HorizontalScrollContainer isLoading={isDiscoverMoviesLoading}>
+        {!isDiscoverMoviesLoading &&
+          discoverMovies?.map((data) => (
             <Poster
               key={data.id}
               data={{
@@ -78,14 +85,14 @@ function index() {
                 title: data.title || data.name || '',
                 media_type: data.media_type || '',
               }}
-              error={trendingMoviesError}
+              error={discoverMoviesError}
             />
           ))}
       </HorizontalScrollContainer>
       <h1>Trending TV SHOW</h1>
-      <HorizontalScrollContainer isLoading={isTrendingTVLoading}>
-        {!isTrendingTVLoading &&
-          trendingTV?.map((data) => (
+      <HorizontalScrollContainer isLoading={isDiscoverTVLoading}>
+        {!isDiscoverTVLoading &&
+          discoverTV?.map((data) => (
             <Poster
               key={data.id}
               data={{
@@ -94,7 +101,7 @@ function index() {
                 title: data.title || data.name || '',
                 media_type: data.media_type || '',
               }}
-              error={trendingTVError}
+              error={discoverTVError}
             />
           ))}
       </HorizontalScrollContainer>

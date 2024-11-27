@@ -1,15 +1,22 @@
 import { useEffect, useState } from 'react'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import { Box, Typography, Grid, Chip, Divider, CircularProgress, Fade, IconButton } from '@mui/material'
 import { BookmarkAdd as BookmarkAddIcon, BookmarkRemove as BookmarkRemoveIcon } from '@mui/icons-material'
+import { toast } from 'react-toastify'
 
 import { PublicFeatureDetail } from '@/Services'
 import { fetchFeatureDetail, getImageURI } from '@/Utils'
 import { detailStyles } from '@/Components'
-import { useUserData } from '@/Hooks'
+import { isAuth, useUserData } from '@/Hooks'
 
 export const Route = createFileRoute('/_layout/detail/$id/$media_type')({
   component: Detail,
+  beforeLoad: () => {
+    if (!isAuth()) {
+      toast.info('You must be logged in to view the application')
+      throw redirect({ to: '/signin' })
+    }
+  },
 })
 
 function Detail() {
