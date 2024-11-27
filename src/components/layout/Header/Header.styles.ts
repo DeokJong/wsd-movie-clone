@@ -37,7 +37,7 @@ export const AppHeader = styled('header')(({ theme }) => ({
   top: 0,
   left: 0,
   right: 0,
-  zIndex: 1000,
+  zIndex: 1200,
   transition: 'background-color 0.3s ease',
   '&:hover, &.scrolled': {
     backgroundColor: '#141414',
@@ -124,7 +124,7 @@ export const MobileNav = styled('div')(({ theme }) => ({
   width: '50%',
   height: '100%',
   backgroundColor: '#141414',
-  zIndex: 1001,
+  zIndex: 1300,
   transition: 'right 0.3s ease',
   '&.open': {
     right: 0,

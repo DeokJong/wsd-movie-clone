@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Box, Button, Paper, TextField, Typography } from '@mui/material'
 import { useForm } from 'react-hook-form'
 
 import { loginStyles } from '../Common.styles'
 
-import { useAuth, AuthError } from '@/Hooks'
-import { ErrorModal } from '@/Components' // Adjust the import path as necessary
+import { useAuth, AuthError, useToast } from '@/Hooks'
 
 type FormData = {
   fullName: string
@@ -16,16 +15,13 @@ type FormData = {
 
 export const SignUpPaper: React.FC<{ onCancelClick: () => void }> = ({ onCancelClick }) => {
   const { register: authRegister } = useAuth()
+  const toast = useToast()
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
   } = useForm<FormData>()
-
-  // State for the error modal
-  const [errorModalOpen, setErrorModalOpen] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
 
   const onSubmit = (data: FormData) => {
     const { fullName, email: username, password, confirmPassword } = data
@@ -34,13 +30,9 @@ export const SignUpPaper: React.FC<{ onCancelClick: () => void }> = ({ onCancelC
       onCancelClick()
     } catch (error: unknown) {
       if (error instanceof AuthError) {
-        // Display the error message in the modal
-        setErrorMessage(error.message)
-        setErrorModalOpen(true)
+        toast.error(error.message)
       } else {
-        console.error(error)
-        setErrorMessage('An unexpected error occurred.')
-        setErrorModalOpen(true)
+        toast.error('An unexpected error occurred.')
       }
     }
   }
@@ -110,12 +102,6 @@ export const SignUpPaper: React.FC<{ onCancelClick: () => void }> = ({ onCancelC
           Cancel
         </Button>
       </Box>
-      {/* Error Modal */}
-      <ErrorModal
-        open={errorModalOpen}
-        errorMessage={errorMessage}
-        onClose={() => setErrorModalOpen(false)}
-      />
     </Paper>
   )
 }

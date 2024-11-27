@@ -89,12 +89,17 @@ export const Banner: React.FC<BannerProps> = ({ movie }) => {
             alignItems: 'flex-start',
           }}
         >
-          <Typography variant="h3" component="h1" sx={{ marginBottom: '0.5rem' }}>
+          <Typography variant="h3" component="h1" sx={{ marginBottom: '0.5rem', fontSize: '1.2rem' }}>
             {movie.title}
           </Typography>
           <Typography
             variant="body1"
-            sx={{ maxWidth: '500px', marginBottom: '1rem', textAlign: 'left' }}
+            sx={{
+              maxWidth: '500px',
+              marginBottom: '1rem',
+              textAlign: 'left',
+              fontSize: '1.2rem',
+            }}
           >
             {movie.overview}
           </Typography>
