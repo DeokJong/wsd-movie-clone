@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify' // 추가된 부분
 import 'react-toastify/dist/ReactToastify.css' // 추가된 부분
 
 import ThemeTransition from './ThemeTransition'
-import { router } from './routetSetting'
+import { router } from './router'
 
 import { useTheme } from '@/Hooks'
 
