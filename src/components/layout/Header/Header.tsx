@@ -30,7 +30,7 @@ import {
   StyledList,
 } from './Header.styles'
 
-import { useAuth, useTheme } from '@/Hooks'
+import { getCurrentUserFullName, useAuth, useTheme } from '@/Hooks'
 
 export const Header: React.FC = () => {
   const { isLogin, logout } = useAuth()
@@ -94,6 +94,9 @@ export const Header: React.FC = () => {
           </DesktopNavLinks>
         </HeaderLeft>
         <HeaderRight>
+          <Typography>
+            {getCurrentUserFullName()}
+          </Typography>
           <DesktopMenuButton>
             <DarkModeSwitch sunColor="white" onChange={toggleDarkmode} checked={isDarkmode} />
           </DesktopMenuButton>

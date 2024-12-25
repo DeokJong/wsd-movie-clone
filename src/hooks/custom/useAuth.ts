@@ -49,6 +49,11 @@ export const getPassword = () => {
   return localStorage.getItem(`user:${email}:password`)
 }
 
+export const getCurrentUserFullName = () => {
+  const email = sessionStorage.getItem('email') || localStorage.getItem('email')
+  return localStorage.getItem(`user:${email}:fullName`)
+}
+
 const loginAtom = atom<boolean>(false)
 const emailAtom = atom<string | null>(null)
 
