@@ -1,6 +1,5 @@
-import { toast } from 'react-toastify'
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { createFileRoute, redirect } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 import {
   Box,
   CircularProgress,
@@ -18,18 +17,12 @@ import { motion } from 'framer-motion'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import _ from 'lodash'
 
-import { isAuth, useSearch } from '@/Hooks'
+import { useSearch } from '@/Hooks'
 import { Poster } from '@/Components'
 import { movieGenres, tvGenres, Genre } from '@/Constant'
 
 export const Route = createFileRoute('/_layout/search')({
-  component: SearchPage,
-  beforeLoad: () => {
-    if (!isAuth()) {
-      toast.info('You must be logged in to view the application')
-      throw redirect({ to: '/signin' })
-    }
-  },
+  component: SearchPage
 })
 
 function SearchPage() {

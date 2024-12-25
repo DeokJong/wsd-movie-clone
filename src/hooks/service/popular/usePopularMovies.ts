@@ -1,7 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 
-import { isAuth } from '../../custom'
-
 import { PopularService, FeatureResults } from '@/Services'
 
 export const usePopularMovies = () => {
@@ -19,8 +17,7 @@ export const usePopularMovies = () => {
     getNextPageParam: (lastPage, pages) => {
       if (lastPage.length === 0) return undefined
       return pages.length + 1
-    },
-    enabled: isAuth(),
+    }
   })
 
   const handleLoadMore = async () => {
