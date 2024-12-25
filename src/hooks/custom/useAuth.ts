@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { atom, useAtom } from 'jotai'
 
 import { errors } from '@/Constant'
+import { BcryptEncoder } from '@/Utils'
 
 export type TDataLogin = {
   email: string
@@ -70,19 +71,25 @@ export const useAuth = () => {
   }, [])
 
   const register = ({ email, password, confirmPassword, fullName }: TDataRegister) => {
+    console.log('compare')
     if (password !== confirmPassword) {
       throw new AuthError(400, 'Password and confirm password do not match')
     }
 
+    console.log('compare2')
     if (localStorage.getItem(`user:${email}:password`)) {
       throw new AuthError(409, 'Email already exists')
     }
+
+    console.log('compare3')
 
     if (email.length === 0 || password.length === 0 || fullName.length === 0) {
       throw new AuthError(400, 'Email, password, and full name are required')
     }
 
-    localStorage.setItem(`user:${email}:password`, password)
+    const hashedPassword = BcryptEncoder.hash(password)
+
+    localStorage.setItem(`user:${email}:password`, hashedPassword)
     localStorage.setItem(`user:${email}:fullName`, fullName)
   }
 
@@ -90,7 +97,7 @@ export const useAuth = () => {
     const storedPassword = localStorage.getItem(`user:${email}:password`)
     if (!storedPassword) {
       throw new AuthError(404, 'User not found')
-    } else if (rawPassword !== storedPassword) {
+    } else if (!BcryptEncoder.compare(rawPassword, storedPassword)) {
       throw new AuthError(401, 'Invalid password')
     }
 

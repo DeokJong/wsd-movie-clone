@@ -6,8 +6,7 @@ export class BcryptEncoder {
     if (!rawPassword || typeof rawPassword !== 'string') {
       throw new Error('Invalid input: Password must be a non-empty string.')
     }
-
-    const salt = genSaltSync(import.meta.env.VITE_APP_BCRYPT_COST || 12)
+    const salt = genSaltSync(parseInt(import.meta.env.VITE_APP_BCRYPT_COST || 12))
     return hashSync(rawPassword, salt)
   }
 
