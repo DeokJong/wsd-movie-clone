@@ -203,7 +203,7 @@ export const getHeaders = async (
   // 토큰이 있는 경우 Authorization 헤더 추가
   if (isStringWithValue(token)) {
     // eslint-disable-next-line dot-notation
-    headers['Authorization'] = `Bearer ${token}`
+    headers['Authorization'] = `bearer ${token}`
   }
 
   // 사용자 이름과 비밀번호가 있는 경우 Basic Authorization 헤더 추가

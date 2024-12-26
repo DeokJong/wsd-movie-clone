@@ -20,10 +20,12 @@ declare module '@mui/material/styles/createPalette' {
     TypographyColor?: {
       primary?: string
       secondary?: string
+      kakao?: string
     }
     TypographyBackground?: {
       primary?: string
       secondary?: string
+      kakao?: string
     }
     concept?: {
       primary?: string
@@ -39,10 +41,12 @@ declare module '@mui/material/styles/createPalette' {
     TypographyColor: {
       primary: string
       secondary: string
+      kakao: string
     }
     TypographyBackground: {
       primary: string
       secondary: string
+      kakao?: string
     }
     concept: {
       primary: string
@@ -142,10 +146,12 @@ const whiteTheme = deepmerge(baseTheme, {
     TypographyColor: {
       primary: '#1a1a1a',
       secondary: '#b0b0b0', // Darker secondary color
+      kakao: '#000000',
     },
     TypographyBackground: {
       primary: '#d0d0d0', // Darker primary background
       secondary: '#a0a0a0', // Slightly darker complementary color
+      kakao: '#FEE500',
     },
     concept: {
       primary: '#FE99A0',
@@ -165,10 +171,12 @@ const darkTheme = deepmerge(baseTheme, {
     TypographyColor: {
       primary: '#b0b0b0', // Darker primary color
       secondary: '#1a1a1a',
+      kakao: '#000000',
     },
     TypographyBackground: {
       primary: '#0f0f0f',
       secondary: '#a0a0a0', // Slightly darker complementary color
+      kakao: '#FEE500',
     },
     concept: {
       primary: '#017060',

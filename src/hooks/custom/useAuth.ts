@@ -41,6 +41,10 @@ const isRememberMe = () => {
 }
 
 export const isAuth = (): boolean => {
+  console.log(getKakaoAccessToken())
+  if (getKakaoAccessToken()) {
+    return true
+  }
   return isRememberMe() ? !!localStorage.getItem('email') : !!sessionStorage.getItem('email')
 }
 
@@ -52,6 +56,26 @@ export const getPassword = () => {
 export const getCurrentUserFullName = () => {
   const email = sessionStorage.getItem('email') || localStorage.getItem('email')
   return localStorage.getItem(`user:${email}:fullName`)
+}
+
+export const setCurrentUserFullName = (fullname: string, email: string) => {
+  localStorage.setItem(`user:${email}:fullName`, fullname)
+}
+
+export const getCurrentUser = () => {
+  return localStorage.getItem('currentUser')
+}
+
+export const setKakaoAccessToken = (accessToken: string, isRememberMe?: boolean) => {
+  if (isRememberMe) {
+    localStorage.setItem('kakaoAccessToken', accessToken)
+  } else {
+    sessionStorage.setItem('kakaoAccessToken', accessToken)
+  }
+}
+
+export const getKakaoAccessToken = () => {
+  return localStorage.getItem('kakaoAccessToken') || sessionStorage.getItem('kakaoAccessToken')
 }
 
 const loginAtom = atom<boolean>(false)
@@ -73,20 +97,18 @@ export const useAuth = () => {
         setIsLogin(true)
       }
     }
+    if (getKakaoAccessToken()) {
+      setIsLogin(true)
+    }
   }, [])
 
   const register = ({ email, password, confirmPassword, fullName }: TDataRegister) => {
-    console.log('compare')
     if (password !== confirmPassword) {
       throw new AuthError(400, 'Password and confirm password do not match')
     }
-
-    console.log('compare2')
     if (localStorage.getItem(`user:${email}:password`)) {
       throw new AuthError(409, 'Email already exists')
     }
-
-    console.log('compare3')
 
     if (email.length === 0 || password.length === 0 || fullName.length === 0) {
       throw new AuthError(400, 'Email, password, and full name are required')
@@ -113,6 +135,9 @@ export const useAuth = () => {
       localStorage.setItem('isRememberMe', 'false')
       sessionStorage.setItem('email', email)
     }
+
+    setKakaoAccessToken('')
+    setKakaoAccessToken('', isRememberMe)
   }
 
   const logout = () => {
@@ -120,6 +145,7 @@ export const useAuth = () => {
     sessionStorage.removeItem('email')
     localStorage.removeItem('isRememberMe')
     setIsLogin(false)
+    setKakaoAccessToken('')
     window.location.reload()
   }
 

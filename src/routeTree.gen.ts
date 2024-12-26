@@ -11,9 +11,11 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as SigninImport } from './routes/signin'
+import { Route as TempImport } from './routes/temp'
 import { Route as LayoutImport } from './routes/_layout'
+import { Route as LoginIndexImport } from './routes/login/index'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
+import { Route as LoginOauth2Import } from './routes/login/oauth2'
 import { Route as LayoutWishlistImport } from './routes/_layout/wishlist'
 import { Route as LayoutSearchImport } from './routes/_layout/search'
 import { Route as LayoutPopularImport } from './routes/_layout/popular'
@@ -21,8 +23,8 @@ import { Route as LayoutDetailIdMediatypeImport } from './routes/_layout/detail.
 
 // Create/Update Routes
 
-const SigninRoute = SigninImport.update({
-  path: '/signin',
+const TempRoute = TempImport.update({
+  path: '/temp',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -31,9 +33,19 @@ const LayoutRoute = LayoutImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const LoginIndexRoute = LoginIndexImport.update({
+  path: '/login/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const LayoutIndexRoute = LayoutIndexImport.update({
   path: '/',
   getParentRoute: () => LayoutRoute,
+} as any)
+
+const LoginOauth2Route = LoginOauth2Import.update({
+  path: '/login/oauth2',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const LayoutWishlistRoute = LayoutWishlistImport.update({
@@ -67,11 +79,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
     }
-    '/signin': {
-      id: '/signin'
-      path: '/signin'
-      fullPath: '/signin'
-      preLoaderRoute: typeof SigninImport
+    '/temp': {
+      id: '/temp'
+      path: '/temp'
+      fullPath: '/temp'
+      preLoaderRoute: typeof TempImport
       parentRoute: typeof rootRoute
     }
     '/_layout/popular': {
@@ -95,12 +107,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutWishlistImport
       parentRoute: typeof LayoutImport
     }
+    '/login/oauth2': {
+      id: '/login/oauth2'
+      path: '/login/oauth2'
+      fullPath: '/login/oauth2'
+      preLoaderRoute: typeof LoginOauth2Import
+      parentRoute: typeof rootRoute
+    }
     '/_layout/': {
       id: '/_layout/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof LayoutIndexImport
       parentRoute: typeof LayoutImport
+    }
+    '/login/': {
+      id: '/login/'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginIndexImport
+      parentRoute: typeof rootRoute
     }
     '/_layout/detail/$id/$media_type': {
       id: '/_layout/detail/$id/$media_type'
@@ -122,7 +148,9 @@ export const routeTree = rootRoute.addChildren({
     LayoutIndexRoute,
     LayoutDetailIdMediatypeRoute,
   }),
-  SigninRoute,
+  TempRoute,
+  LoginOauth2Route,
+  LoginIndexRoute,
 })
 
 /* prettier-ignore-end */
@@ -134,7 +162,9 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/_layout",
-        "/signin"
+        "/temp",
+        "/login/oauth2",
+        "/login/"
       ]
     },
     "/_layout": {
@@ -147,8 +177,8 @@ export const routeTree = rootRoute.addChildren({
         "/_layout/detail/$id/$media_type"
       ]
     },
-    "/signin": {
-      "filePath": "signin.tsx"
+    "/temp": {
+      "filePath": "temp.tsx"
     },
     "/_layout/popular": {
       "filePath": "_layout/popular.tsx",
@@ -162,9 +192,15 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "_layout/wishlist.tsx",
       "parent": "/_layout"
     },
+    "/login/oauth2": {
+      "filePath": "login/oauth2.tsx"
+    },
     "/_layout/": {
       "filePath": "_layout/index.tsx",
       "parent": "/_layout"
+    },
+    "/login/": {
+      "filePath": "login/index.tsx"
     },
     "/_layout/detail/$id/$media_type": {
       "filePath": "_layout/detail.$id.$media_type.tsx",

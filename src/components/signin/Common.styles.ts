@@ -114,6 +114,29 @@ export const loginStyles: { [key: string]: SxProps<Theme> } = {
       fontSize: '0.9rem',
     },
   }),
+  kakaoButton: (theme: Theme) => ({
+    padding: 1.5,
+    fontSize: '1rem',
+    fontWeight: 'bold',
+    textTransform: 'none',
+    color: theme.palette.TypographyColor.primary,
+    background: '#FEE500',
+    transition: 'background 0.3s ease, color 0.3s ease',
+    '&:hover': {
+      background: '#FEE500', // hover 시 배경색 변경
+      color: theme.palette.TypographyColor.secondary,
+      transition: 'opacity 0.3s ease',
+      opacity: 0.8,
+    },
+    [theme.breakpoints.down('md')]: {
+      padding: 1.2,
+      fontSize: '0.95rem',
+    },
+    [theme.breakpoints.down('sm')]: {
+      padding: 1,
+      fontSize: '0.9rem',
+    },
+  }),
   textField: (theme: Theme) => ({
     marginBottom: 2,
     '& .MuiInputLabel-root': {

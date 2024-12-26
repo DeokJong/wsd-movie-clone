@@ -52,7 +52,7 @@ export const Header: React.FC = () => {
   }, [])
 
   const removeKey = () => {
-    navigate({ to: '/signin' })
+    navigate({ to: '/login' })
   }
 
   const toggleMobileMenu = () => {

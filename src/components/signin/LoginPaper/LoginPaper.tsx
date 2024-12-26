@@ -14,6 +14,7 @@ import {
 import { loginStyles } from '../Common.styles'
 
 import { AuthError, useAuth, useToast } from '@/Hooks'
+import { KakaoService } from '@/Services'
 
 type FormData = {
   email: string
@@ -42,6 +43,24 @@ export const LoginPaper: React.FC<{ onSignUpClick: () => void }> = ({ onSignUpCl
       } else {
         toast.error('An unexpected error occurred.')
       }
+    }
+  }
+
+  const handleKakaoLogin = () => {
+    const kakaoOAuthUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${
+      import.meta.env.VITE_KAKAO_REST_API_KEY
+    }&redirect_uri=${import.meta.env.VITE_KAKAO_REDIRECT_URI}`
+    try {
+      KakaoService.authorize({
+        query: {
+          response_type: 'code',
+          client_id: import.meta.env.VITE_KAKAO_REST_API_KEY,
+          redirect_uri: import.meta.env.VITE_KAKAO_REDIRECT_URI,
+        },
+      })
+      window.location.href = kakaoOAuthUrl
+    } catch (error) {
+      toast.error('An unexpected error occurred.')
     }
   }
 
@@ -91,6 +110,14 @@ export const LoginPaper: React.FC<{ onSignUpClick: () => void }> = ({ onSignUpCl
           onClick={onSignUpClick}
         >
           Sign Up
+        </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          sx={loginStyles.kakaoButton}
+          onClick={handleKakaoLogin}
+        >
+          Kakao Login
         </Button>
       </Box>
     </Paper>

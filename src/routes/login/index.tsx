@@ -4,7 +4,7 @@ import { Box, Slide } from '@mui/material'
 
 import { Header, LoginPaper, SignUpPaper } from '@/Components'
 
-export const Route = createFileRoute('/signin')({
+export const Route = createFileRoute('/login/')({
   component: SignIn,
 })
 

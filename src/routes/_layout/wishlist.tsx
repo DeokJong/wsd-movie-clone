@@ -11,7 +11,7 @@ export const Route = createFileRoute('/_layout/wishlist')({
   beforeLoad: () => {
     if (!isAuth()) {
       toast.info('You must be logged in to view the application')
-      throw redirect({ to: '/signin' })
+      throw redirect({ to: '/login' })
     }
   },
 })
