@@ -48,7 +48,7 @@ export const useUserData = () => {
   const appendWishList = (id: number, mediaType: string) => {
     if (!isLogin) {
       alert('You must be logged in to add to wishlist.')
-      navigate({ to: '/signin' })
+      navigate({ to: '/login' })
       return
     }
 
@@ -60,7 +60,7 @@ export const useUserData = () => {
   const removeWishList = (id: number) => {
     if (!isLogin) {
       alert('You must be logged in to add to wishlist.')
-      navigate({ to: '/signin' })
+      navigate({ to: '/login' })
       return
     }
 
