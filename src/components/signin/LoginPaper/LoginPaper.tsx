@@ -47,7 +47,7 @@ export const LoginPaper: React.FC<{ onSignUpClick: () => void }> = ({ onSignUpCl
   }
 
   const handleKakaoLogin = () => {
-    const kakaoOAuthUrl = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${
+    const kakaoOAuthUrl = `${import.meta.env.VITE_KAKAO_OAUTH_API_URL}/oauth/authorize?response_type=code&client_id=${
       import.meta.env.VITE_KAKAO_REST_API_KEY
     }&redirect_uri=${import.meta.env.VITE_KAKAO_REDIRECT_URI}`
     try {
