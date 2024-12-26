@@ -1,9 +1,14 @@
 /* eslint-disable max-len */
 import { Button } from '@mui/material'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/temp')({
   component: temp,
+  beforeLoad: () => {
+    if (import.meta.env.VITE_ENV === 'production') {
+      throw redirect({ to: '/' })
+    }
+  },
 })
 
 function temp() {
